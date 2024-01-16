@@ -1,5 +1,5 @@
 {
-  "name": "books.shop",
+  "name": "bookshop",
   "version": "1.0.0",
   "description": "My book project!",
   "main": "server.js",
@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "assert": "^2.0.0",
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.1.1",
     "connect-mongodb-session": "^3.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.0",
@@ -29,10 +29,13 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SobirjonFayziyevich/books.shop.git"
+    "url": "git+https://github.com/SobirjonFayziyevich/bookshop.git"
   },
   "bugs": {
-    "url": "https://github.com/SobirjonFayziyevich/books.shop/issues"
+    "url": "https://github.com/SobirjonFayziyevich/bookshop/issues"
   },
-  "homepage": "https://github.com/SobirjonFayziyevich/books.shop#readme"
+  "homepage": "https://github.com/SobirjonFayziyevich/bookshop#readme",
+  "directories": {
+    "lib": "lib"
+  }
 }

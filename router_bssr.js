@@ -1,6 +1,6 @@
 const express = require("express");
 const router_bssr = express.Router();                   // expressni ichidan router olib chiqilyabdi
-const bookshopController = require("./controllers/bookshopController");
+const bookshopController = require("./controllers/bookshopController.js");
 
 
 /**********************************

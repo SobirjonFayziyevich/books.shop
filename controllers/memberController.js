@@ -10,6 +10,7 @@ memberController.signup = async (req, res ) => {
             new_member = await member.signupData(data);   //ichida request body yuborilyabdi
 
         res.json({state: 'success', data: new_member});
+        // res.send("ok");
     }
     catch(err){           // xatoni ushlassh uchun try catch dan foydalanamiz
         console.log(`ERROR, cont/signup, ${err.message}`)
@@ -37,4 +38,9 @@ memberController.login = async (req, res ) => {
 memberController.logout = (req, res ) => {
     console.log("GET cont.logout");
     res.send("logout page");
+
+     // access_token
 };
+
+
+

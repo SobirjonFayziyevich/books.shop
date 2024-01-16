@@ -19,7 +19,7 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 // 4: Routing codes
-app.use("/resto", router_bssr);
+app.use("/book", router_bssr);
 app.use("/", router);
 
 

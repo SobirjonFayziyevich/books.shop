@@ -7,6 +7,7 @@ const memberController = require("./controllers/memberController");
  *         REST  API             *
  **********************************/
 
+// memberController
 router.post("/signup", memberController.signup);  
 router.post("/login", memberController.login);
 router.get("/logout", memberController.logout);

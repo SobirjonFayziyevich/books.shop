@@ -15,7 +15,7 @@ router.get("/logout", memberController.logout);
 
 // Otherss routerlar
 router.get("/Menu",  (req, res) =>{
-    res.send ("menu page");
+    res.send ("book-menu page");
 });
 
 

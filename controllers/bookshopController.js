@@ -32,7 +32,7 @@ bookshopController.signupProcess = async (req, res) => {
     assert(result, Definer.general_err1);
 
     req.session.member = result;
-    res.redirect("/book/products/menu");
+    res.redirect("/resto/products/menu");
   } catch (err) {
     console.log(`ERROR, cont/signupProcess, ${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -60,8 +60,8 @@ bookshopController.loginProcess = async (req, res) => {
       req.session.member = result;
       req.session.save(() => {
       result.mb_type === "ADMIN"
-        ? res.redirect("/book/all-books")
-        : res.redirect("/book/products/menu");
+        ? res.redirect("/resto/all-books")
+        : res.redirect("/resto/products/menu");
     });
 
     res.json({ state: "success", data: new_member });

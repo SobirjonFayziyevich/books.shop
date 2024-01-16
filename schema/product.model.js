@@ -45,23 +45,12 @@ const productSchema = new mongoose.Schema(
     product_size: {
       type: String,
       required: function () {
-        const sized_list = ["dish", "salad", "dessert"];
+        const sized_list = ["book"];
         return sized_list.includes(this.product_collection);
       },
       default: "normal",
       enum: {
         values: product_size_enums,
-        message: "{VALUES} is not among permitted values",
-      },
-    },
-    product_volume: {
-      type: Number,
-      default: 1,
-      required: function () {
-        return this.product_collection === "drink";
-      },
-      enum: {
-        values: product_volume_enums,
         message: "{VALUES} is not among permitted values",
       },
     },
@@ -94,7 +83,7 @@ const productSchema = new mongoose.Schema(
 { timestamps: true} 
 );
 
-productSchema.index(
+productSchema.index( // bir xil qiymatli nahsulotni qushmasin ADD holatida.
   {
     bookshop_mb_id: 1,
     product_name: 1,

@@ -1,4 +1,5 @@
 <%- include('includes/header') %>
+
 <link rel="stylesheet" type="text/css" href="/css/menu.css"/>
 <body>
 <div id="main_container">
@@ -9,7 +10,7 @@
                 <a class="nav-link active" href="/resto">Home</a>        <!-- atributlar (GET) traditional get-->
             </li>
             <li class="nav-item" style="cursor: pointer">
-                <a class="nav-link" href="/resto/all-restaurant">Book</a>
+                <a class="nav-link" href="/resto/products/menu">Book</a>
             </li>
             <li class="nav-item" style="cursor: pointer">
                 <a class="nav-link" href="/resto/logout">Logout</a>
@@ -19,84 +20,248 @@
 
     <div class="bookshop_menu_frame">
         <div class="bookshop_container">
-            <div class="resto_table">
-                <span class="new_dish_txt">
-                    All Books menu
-                </span>
-
-                <table class="table table-hover">
+            <div class="dishs_table">
+                    <span class="new_dish_txt">
+                        <%= member.mb_nick.toUpperCase() %> All book menu
+                    </span>
+                <table class="table table-bordered table-hover">
                     <thead class="thead-light">
-                    <tr class = "thead-light">
-                    <th scope="col">T/r</th>
-                    <th scope="col"> Book Name </th>
-                    <th scope="col"> Oshxona  Telefon Nomeri </th>
-                    <th scope="col"> Oshxona TOP </th>
-                    <th scope="col"> Oshxona  Holati </th>
-                    </tr>
-                    </thead>
+                        <tr class = "thead-light">
+                        <th scope="col">T/r</th>
+                        <th scope="col"> Taom nomi </th>
+                        <th scope="col">  Taom narxi </th>
+                        <th scope="col">Taom hajmi</th>
+                        <th scope="col">Taom qoldiq miqdori</th>
+                        <th scope="col">Taom Holati</th>
+                        </tr>
+                        </thead>
 
-                    <% bookshop_data.map(function(value, key) { %>  
-                    <tbody style="background: white">
-                    a<td><%= key + 1 %></td>                          
-               <td> <%= value.mb_nick %> </td>        
-                    <td><%= value.mb_phone %> </td>
-                    <td style="width: 13%;">
-                        <label class="switch">
-                            
-                            <input type="checkbox" class="mb_top" id="<%= value._id %>"
-                                 <%= value.mb_top === 'Y' ? 'checked' : '' %> />     <!--agar (value) (mb_top)ning qiymati (YES)bulganda CHECK bulsin,-->
-                                                                                       <!--YES bulmasa hech qanday qiymat olmasin-->
-                            <span class="slider round"></span>
-                        </label>
-                    </td>
-                    <td style="width: 13%;">
-                        <select class="spec_select mb_status" id="<%= value._id %>">       
-                                                                    
-                            <option value="ONPAUSE" <%= value.mb_status === 'ONPAUSE' ? 'selected' : '' %> >ONPAUSE</option>
-                            <option value="ACTIVE" <%= value.mb_status === 'ACTIVE' ? 'selected' : '' %> >ACTIVE</option>
-                            <option value="DELETED" <%= value.mb_status === 'DELETED' ? 'selected' : '' %>>DELETED</option>
-                        </select>
-                    </td>
-                    </tbody>
+                    <% restaurant_data.map((value, key) => { %>
+                        <tbody style="background: white">
+                        <td><%= key + 1 %></td>     
+                        <td><%= value.product_name %></td>    
+                        <td><%= value.product_collection %></td>
+                        <!-- <td>
+                            <%= value.product_collection === 'drink' ? value.product_volume
+                                    : value.product_size %>
+                        </td> -->
+                        <td><%= value.product_price %></td>
+                        <td><%= value.product_left_cnt %></td>    
+                        <td>
+                            <select class="spec_select new_product_status" id="<%= value._id %>">
+                                <option value="PAUSED" <%= value.product_status === 'PAUSED' ? 'selected' : '' %> >
+                                    PAUSED
+                                </option>
+                                <option value="PROCESS" <%= value.product_status === 'PROCESS' ? 'selected' : '' %> >
+                                    PROCESS
+                                </option>
+                            </select>
+                        </td>
+                        </tbody>
                     <% }); %>
-
                 </table>
+
+                <div class="long_input" style="display: flex; align-items: flex-end; margin-bottom: 25px;">
+                    <button class="btn btn-primary hiding_btn">Add Book</button>
+                </div>
             </div>
+
+            <form onsubmit="return validateForm()" action="/resto/products/create" method="POST"
+                  class="dish_container" enctype="multipart/form-data">
+
+                <div class="long_input" style="display: flex; align-items: center; margin-bottom: 25px;">
+                    <span class="new_dish_txt">New Book</span>
+                </div>
+
+                <div>
+                    <div class="long_input">
+                        <label>Type of Book</label>
+                        <input type="text" placeholder="Book name" name="product_name" class="product_name">
+                    </div>
+                    <!-- bu inputning qiymati backendga malumot yuborish un uning qiymati bizga kurinmaydi-->
+                    <input name="product_status" value="PAUSED" class="product_status" hidden>
+                </div>
+
+                <div class="half_input_frame">
+                    <div class="half_input">
+                        <label>Book Price</label>
+                        <input type="number" placeholder="Book Price" name="product_price" class="product_price">
+                    </div>
+                
+                </div>
+
+                <div class="half_input_frame">
+                    <div class="half_input">
+                        <label>Taom Turi</label>
+                        <select class="product_collection" name="product_collection">
+                            <option value="dish" selected>Taom</option>
+                            <option value="salad">Salad</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="etc">Boshqa</option>
+                        </select>
+                    </div>
+
+
+                    <div class="half_input" id="product_size">
+                        <label>Taom Hajmi</label>
+                        <select class="product_size" name="product_size">
+                            <option value="small">Kichkina</option>
+                            <option value="normal" selected>O'rtacha</option>
+                            <option value="large">Katta</option>
+                            <option value="set">Set</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="long_input">
+                    <label>Taom Haqida</label>
+                    <textarea name="product_description" class="product_description"></textarea>
+                </div>
+
+                <div class="img_frame">
+                    <label>Taom Rasmlari</label>
+                    <div class="media_frame">
+                        <div class="upload_img_box">
+                            <img src="/images/uploads.svg" class="1" id="image_section_1">
+                            <input type="file" id="file" name="product_images" class="image_one"
+                                   onchange="previewFileHandler(this, 1)">
+                        </div>
+
+
+                        <div class="upload_img_box">
+                            <img src="/images/uploads.svg" class="2" id="image_section_2">
+                            <input type="file" id="file" name="product_images" class="image_two"
+                                   onchange="previewFileHandler(this, 2)">
+                        </div>
+
+
+                        <div class="upload_img_box">
+                            <img src="/images/uploads.svg" class="3" id="image_section_3">
+                            <input type="file" id="file" name="product_images" class="image_three"
+                                   onchange="previewFileHandler(this, 3)">
+                        </div>
+
+                        <div class="upload_img_box">
+                            <img src="/images/uploads.svg" class="4" id="image_section_4">
+                            <input type="file" id="file" name="product_images" class="image_four"
+                                   onchange="previewFileHandler(this, 4)">
+                        </div>
+
+                        <div class="upload_img_box">
+                            <img src="/images/uploads.svg" class="5" id="image_section_5">
+                            <input type="file" id="file" name="product_images" class="image_five"
+                                   onchange="previewFileHandler(this, 5)">
+                        </div>
+                        <input value="<%= member._id %>" name="restaurant_id" class="restaurant_id" hidden>
+                    </div>
+                </div>
+
+
+                <div class="long_input" style="align-items: flex-end; margin-bottom: 25px;">
+                    <button type="submit" class="btn btn-primary" id="create_product">Chop Etish</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
 
 <script>
+    $(function () {  
 
-    $(function () {
-         $(".mb_top").on("change", function (e) {  
-            const id = e.target.id;   
-            const mb_top = e.target.checked ? 'Y' : 'N';  
-
-            axios.post('/resto/all-book/edit',{id: id, mb_top: mb_top})
-                .then(response => {
-                const result = response.data;              
-                    if(result.state === 'success') alert('successfully update');
-                    else alert(result.message);            
-                })
-                .catch(err => console.log(err));
+        $(".product_collection").on("change", () => {
+            const selected_value=$(".product_collection").val();
+            if (selected_value === 'drink') {
+                $("#product_volume").show(); 
+                $("#product_size").hide();    
+            } else {
+                $("#product_volume").hide();
+                $("#product_size").show();
+            }
         });
-         $(".mb_status").on("change", function (e) {  
-            
-            const id = e.target.id;   //event bydefault kirib keladi va kerak bulgan resta (id) beradi.
-            const mb_status = $(`#${id}.mb_status`).val();  //mb_top_status checked bul,yes bulmasa No kurinishida bul.
 
-            console.log("mb_status:", mb_status);
-
-            axios.post('/resto/all-book/edit',{id: id, mb_status: mb_status})
-                .then(response => {
-                    const result = response.data;               
-                    if(result.state === 'success') alert('successfully update');
-                    else alert(result.message);          
-                })
-                .catch(err => console.log(err));
+        $(".hiding_btn").on("click", () => {   // button tugma bosilganda dish_container ichidagi mahsulotlarni qushsin
+            $(".dish_container").slideToggle(500);
+            $(".hiding_btn").css("display", "none");
         });
+
+        // product_status_changer
+
+        $(".new_product_status").on("change", async function (e) {  //e bu event degani yani ishga tushirish degani
+            const id=e.target.id;
+            // alert(id);  // id tekshirish un.
+            const product_status=$(`#${id}.new_product_status`).val();  //product statusni id => (value._id) new product statusni valuesini olamiz.
+            // alert(product_status ); statusni tekshirdik.
+
+            try {
+                const response=await axios.post(
+                    `/resto/products/edit/${id}`,
+                    {id: id, product_status: product_status}
+                );
+
+                //kutish bulib turadi malumot backendga kettdi .javob kelishini kutamiz.
+                const result=response.data;
+                console.log("result:", result);
+
+                if (result.state == 'success') {
+                    alert('success');
+                    location.reload();
+                } else {
+                    alert(result.message);
+                }
+            } catch (err) {
+                console.log(' updateChosenProduct err:', err);
+            }
+        })
     });
+  // function yozayotganimiz un JQUARYdan tashqarida yozamiz.
+    function validateForm() {
+
+        const bookshop_mb_id=$(".bookshop_mb_id").val(),
+            product_name=$(".product_name").val(),
+            product_price=$(".product_price").val(),
+            product_left_cnt=$(".product_left_cnt").val(),
+            product_collection=$(".product_collection").val(),
+            product_description=$(".product_description").val(),
+            product_status=$(".product_status").val();
+
+        if (
+            bookshop_mb_id == '' ||
+            product_name == '' ||
+            product_price == '' ||
+            product_left_cnt == '' ||
+            product_collection == '' ||
+            product_description == '' ||
+            product_status == '') {
+            alert(`Iltimos hamma ma'lumotlarni kiriting`);
+            return false;
+        } else return true;
+    }
+
+    function previewFileHandler(input, order) {
+        const image_class_name=input.className;
+        const file=$(`.${image_class_name}`).get(0).files[0];
+        const fileType=file['type'];
+        const validateImageTypes=["image/jpg", "image/jpeg", "image/png"];
+
+        if (!validateImageTypes.includes(fileType)) {
+            alert("Iltimos ruxsat etilgan formatdagi rasmlarni yuklang! (jpg, jpeg, png)");
+        } else {
+            if (file) {
+                let reader=new FileReader();
+                reader.onload=function () {
+                    $(`#image_section_${order}`).attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+
+
 </script>
+
+
 </body>
-<%- include('includes/footer') %>
+
+<%- include("includes/footer") %>

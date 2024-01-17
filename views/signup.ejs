@@ -14,37 +14,37 @@
     <div class="login_frame" style="width: 650px; height: 730px">
 
         <div class="login_top">
-            <span>Ro'yxatdan o'tish</span>
+            <span>Sign up</span>
             <div>
-                Bosh sahifaga qaytish
+                Return to homepage
                 <a href="/resto" style="color: #6440fb">Home</a>
             </div>
             <p>
-                Ro'yhatdan allaqachon o'tganmisiz?
+                Are you registered?
                 <a href="/resto/login" style="color: #6440fb">Login</a>
             </p>
         </div>
 
         <div class="sign-input_frame">
             <div class="sign_up_frame">
-                <label>Foydalanuvchining ismi</label>
+                <label>Username</label>
                 <input
                         type="text"
                         name="mb_nick"
                         class="mb_nick"
-                        placeholder="Foydalanuvchining ismi"
+                        placeholder="Username"
                         value=""
                         required
 
                 />
             </div>
             <div class="sign_up_frame">
-                <label>Telefon raqam</label>
+                <label>Phone number</label>
                 <input
                         type="text"
                         name="mb_phone"
                         class="mb_phone"
-                        placeholder="Telefon raqam"
+                        placeholder="Phone number"
                         value=""
                         required
 
@@ -59,19 +59,19 @@
                         type="password"
                         name="mb_password"
                         class="mb_password"
-                        placeholder="passwordni kiriting"
+                        placeholder="Enter the password"
                         value=""
                         required
 
                 />
             </div>
             <div class="sign_up_frame">
-                <label>Passwordni qayta kiriting</label>
+                <label>Re-enter the password</label>
                 <input
                         type="password"
                         name="mb_confirm_password"
                         class="mb_confirm_password"
-                        placeholder="passwordni tasdiqlash"
+                        placeholder="Re-enter the password"
                         value=""
                         required
 
@@ -84,30 +84,30 @@
             <div class="media_frame">
                 <img class="upload_img_frame" src="/images/default_resto.jpg"/>
                 <div class="upload_container">
-                    <span class="media_text">Restaurant Picture</span>
+                    <span class="media_text">Book Picture</span>
                     <div class="filebox bs3-primary preview-image">
                         <input
                                 class="upload-name"
-                                value="Rasmni tanlang"
+                                value="Choose Picture"
                                 disabled="disabled"
                         />
-                        <label for="input_file"> Rasm yuklash </label>
+                        <label for="input_file"> Upload image </label>
                         <input
                                 type="file"
                                 id="input_file"
-                                name="restaurant_img"
-                                class="upload-hidden form-control-file restaurant_img"
+                                name="book_img"
+                                class="upload-hidden form-control-file book_img"
                         />
                     </div>
                     <p class="thumbnail_desc">
-                        Oshxona rasminggizni buyerga yuklang.<br/> Muhim kursatmalar: .jpg,
-                        .jpeg yoki .png. <br/>rasmda matn yo'q bo'lishi darkor!
+                        Enter a picture of the book.<br/> Important instructions: .jpg,
+                        .jpeg or .png. <br/>
                     </p>
                 </div>
             </div>
         </div>
         <button class="login_btn btn" name="signup" type="submit">
-            Ro'yxatdan o'tish
+            Sign up
         </button>
 
     </div>
@@ -126,7 +126,7 @@
                 const validImageTypes=["image/jpg", "image/jpeg", "image/png"];
                 if (!validImageTypes.includes(fileType)) {
                     alert(
-                        "Iltimos ruxsat etilgan formatdagi rasmlarni yuklang: jpg, jpeg va png!"
+                        "Please upload images in allowed format: jpg, jpeg va png!"
                     );
                 } else {
                     if (uploading_file) {
@@ -150,7 +150,7 @@
         const mb_phone=$(".mb_phone").val();
         const mb_password=$(".mb_password").val();
         const mb_confirm_password=$(".mb_confirm_password").val();
-        const restaurant_img=$(".bookshop_img").get(0).files[0] ?? null;
+        const book_img=$(".book_img").get(0).files[0] ?? null;
 
 
         if (mb_nick == '' ||
@@ -158,15 +158,15 @@
             mb_password == '' ||
             mb_confirm_password == ''
         ) {
-            alert(`Iltimos hamma ma'lumotlarni kiriting!`)
+            alert(`Please enter all information!`)
             return false
         } else if (mb_password !== mb_confirm_password) {
-            alert(`Iltimos passwordni to'g'ri kiriting!`)
+            alert(`Please enter the correct password!`)
             return false
         }
 
-        if (!restaurant_img) {
-            alert(`Iltimos rasmni yuklang!`)
+        if (!book_img) {
+            alert(`Please upload image!`)
             return false
         }
         return true;

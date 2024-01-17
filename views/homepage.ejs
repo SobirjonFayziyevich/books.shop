@@ -15,7 +15,7 @@
       </li>
       <% if(!member) { %>
       <li class="nav-item" style="cursor: pointer">
-        <a class="nav-link" href="/resto/sign-up">Signup</a>
+        <a class="nav-link" href="/resto/signup">Signup</a>
       </li>
       <li class="nav-item" style="cursor: pointer">
         <a class="nav-link" href="/resto/login">Login</a>
@@ -45,7 +45,7 @@
       <% } %>
     </ul>
   </div>
-       <!-- HOME PAGE ANIMATION SECTION START -->
+  <!-- HOME PAGE ANIMATION SECTION START -->
 
   <div class="animation-wrapper">
     <div class="sphere-animation">
@@ -125,7 +125,7 @@
   </div>
 
   <script>
-       // HOME PAGE ANIMATION SCRIPT START
+    // HOME PAGE ANIMATION SCRIPT START
     function fitElementToParent(el, padding) {
       let timeout = null;
       function resize() {
@@ -141,7 +141,7 @@
       resize();
       window.addEventListener("resize", resize);
     }
-     const sphereAnimation = (function () {
+    const sphereAnimation = (function () {
       let sphereEl = document.querySelector(".sphere-animation");
       let spherePathEls = sphereEl.querySelectorAll(".sphere path");
       let pathLength = spherePathEls.length;

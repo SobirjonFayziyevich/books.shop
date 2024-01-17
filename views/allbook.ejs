@@ -28,11 +28,11 @@
                     <thead class="thead-light">
                         <tr class = "thead-light">
                         <th scope="col">T/r</th>
-                        <th scope="col"> Taom nomi </th>
-                        <th scope="col">  Taom narxi </th>
-                        <th scope="col">Taom hajmi</th>
-                        <th scope="col">Taom qoldiq miqdori</th>
-                        <th scope="col">Taom Holati</th>
+                        <th scope="col"> Book name  </th>
+                        <th scope="col"> Book price </th>
+                        <th scope="col"> Type of Book </th>
+                        <th scope="col"> Excise number</th>
+                        <th scope="col"> Status </th>
                         </tr>
                         </thead>
 
@@ -75,7 +75,7 @@
 
                 <div>
                     <div class="long_input">
-                        <label>Type of Book</label>
+                        <label>Book name</label>
                         <input type="text" placeholder="Book name" name="product_name" class="product_name">
                     </div>
                     <!-- bu inputning qiymati backendga malumot yuborish un uning qiymati bizga kurinmaydi-->
@@ -87,27 +87,33 @@
                         <label>Book Price</label>
                         <input type="number" placeholder="Book Price" name="product_price" class="product_price">
                     </div>
+                    <div class="half_input">
+                        <label>Excise number</label>
+                        <input type="number" placeholder="Taom Mavjud Miqdori " name="product_left_cnt"
+                               class="product_left_cnt">
+                    </div>
                 
                 </div>
 
                 <div class="half_input_frame">
                     <div class="half_input">
-                        <label>Taom Turi</label>
+                        <label>Type of book</label>
                         <select class="product_collection" name="product_collection">
-                            <option value="dish" selected>Taom</option>
-                            <option value="salad">Salad</option>
-                            <option value="dessert">Dessert</option>
-                            <option value="etc">Boshqa</option>
+                            <option value="thriller">Thriller</option>
+                            <option value="history">History</option>
+                            <option value="detective">Detective</option>
+                            <option value="poety">Poety</option>
+                            <option value="atc">Others</option>
                         </select>
                     </div>
 
 
                     <div class="half_input" id="product_size">
-                        <label>Taom Hajmi</label>
+                        <label>Excise number</label>
                         <select class="product_size" name="product_size">
-                            <option value="small">Kichkina</option>
-                            <option value="normal" selected>O'rtacha</option>
-                            <option value="large">Katta</option>
+                            <option value="small">Small</option>
+                            <option value="normal" selected>Normal</option>
+                            <option value="large">Big</option>
                             <option value="set">Set</option>
                         </select>
                     </div>
@@ -115,12 +121,12 @@
 
 
                 <div class="long_input">
-                    <label>Taom Haqida</label>
+                    <label>About of book</label>
                     <textarea name="product_description" class="product_description"></textarea>
                 </div>
 
                 <div class="img_frame">
-                    <label>Taom Rasmlari</label>
+                    <label>Book Images</label>
                     <div class="media_frame">
                         <div class="upload_img_box">
                             <img src="/images/uploads.svg" class="1" id="image_section_1">
@@ -153,13 +159,13 @@
                             <input type="file" id="file" name="product_images" class="image_five"
                                    onchange="previewFileHandler(this, 5)">
                         </div>
-                        <input value="<%= member._id %>" name="restaurant_id" class="restaurant_id" hidden>
+                        <input value="<%= member._id %>" name="book_id" class="book_id" hidden>
                     </div>
                 </div>
 
 
                 <div class="long_input" style="align-items: flex-end; margin-bottom: 25px;">
-                    <button type="submit" class="btn btn-primary" id="create_product">Chop Etish</button>
+                    <button type="submit" class="btn btn-primary" id="create_product">Submit</button>
                 </div>
             </form>
 
@@ -182,7 +188,7 @@
         });
 
         $(".hiding_btn").on("click", () => {   // button tugma bosilganda dish_container ichidagi mahsulotlarni qushsin
-            $(".dish_container").slideToggle(500);
+            $(".book_container").slideToggle(500);
             $(".hiding_btn").css("display", "none");
         });
 
@@ -201,7 +207,7 @@
                 );
 
                 //kutish bulib turadi malumot backendga kettdi .javob kelishini kutamiz.
-                const result=response.data;
+                const result = response.data;
                 console.log("result:", result);
 
                 if (result.state == 'success') {
@@ -234,7 +240,7 @@
             product_collection == '' ||
             product_description == '' ||
             product_status == '') {
-            alert(`Iltimos hamma ma'lumotlarni kiriting`);
+            alert(`Please enter all information`);
             return false;
         } else return true;
     }
@@ -246,7 +252,7 @@
         const validateImageTypes=["image/jpg", "image/jpeg", "image/png"];
 
         if (!validateImageTypes.includes(fileType)) {
-            alert("Iltimos ruxsat etilgan formatdagi rasmlarni yuklang! (jpg, jpeg, png)");
+            alert("Please enter images in the allowed format! (jpg, jpeg, png)");
         } else {
             if (file) {
                 let reader=new FileReader();
@@ -257,11 +263,7 @@
             }
         }
     }
-
-
 </script>
-
-
 </body>
 
 <%- include("includes/footer") %>

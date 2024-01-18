@@ -1,7 +1,8 @@
 const Member = require("../models/member");
+const member = require("../schema/member.model");
 const assert = require("assert");
 const Definer = require("../lib/error");
-const Product = require("./productController");
+const Product = require("../models/Product");
 const Book = require("../models/Book");
 
 let bookshopController = module.exports;
@@ -56,7 +57,7 @@ bookshopController.getMybookshopProducts = async (req, res) => {
     const product = new Product();
     const data = await product.getAllProductsDatabookshop(res.locals.member);
 
-    res.render("book-menu", { bookshop_data: data });
+    res.render("book-menu", { book_data: data });
   } catch (err) {
     console.log(`ERROR: cont/getMybookshopProducts, ${err.message}`);
     res.redirect("/resto");
@@ -80,8 +81,7 @@ bookshopController.signupProcess = async (req, res) => {
   try {
     console.log("POST: cont/signupProcess");
     assert(req.file, Definer.general_err3);
-
-    let new_member = req.body;
+    let new_member = req.body; // qiymatini uzgartirish lozimligi un let bn berdim.
     new_member.mb_type = "BOOKSHOP";
     new_member.mb_image = req.file.path;
 
@@ -96,6 +96,8 @@ bookshopController.signupProcess = async (req, res) => {
     res.json({ state: "fail", message: err.message });
   }
 };
+
+
 // getLoginMyBook Process
 bookshopController.getLoginMyBookshop = async (req, res) => {
   try {
@@ -113,7 +115,7 @@ bookshopController.loginProcess = async (req, res) => {
     console.log("POST: cont/loginProcess");
     const data = req.body,
       member = new Member(), 
-      new_member = await member.loginData(data); 
+      result = await member.loginData(data); 
 
     // SESSION AUTHENTICATION
     req.session.member = result;
@@ -123,7 +125,7 @@ bookshopController.loginProcess = async (req, res) => {
         : res.redirect("/resto/products/menu");
     });
   } catch (err) {
-    res.json({ state: "success", data: new_member });
+    // res.json({ state: "success", data: result});
     console.log(`ERROR, cont/loginProcess, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }

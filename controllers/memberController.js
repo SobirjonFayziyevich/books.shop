@@ -1,4 +1,4 @@
-const Member = require("../models/member");
+const Member = require("../models/Member");
 const Definer = require("../lib/error");
 const assert = require("assert");
 
@@ -10,8 +10,7 @@ memberController.signup = async (req, res) => {
     const data = req.body,
       member = new Member(), 
       new_member = await member.signupData(data); 
-
-    console.log("result:::", new_member);
+      // console.log("result:::", new_member);
     const token = memberController.createToken(new_member); 
     res.cookie("access_token", token, {
      
@@ -47,3 +46,22 @@ memberController.logout = (req, res) => {
 
   // access_token
 };
+
+memberController.createToken = (result) => {
+  try {
+    const upload_data = {
+      _id: result._id,
+      mb_nick: result.mb_nick,
+      my_type: result.mb_type,
+    };
+    const token = jwt.sign(upload_data, process.env.SECRET_TOKEN, {
+      expiresIn: "6h",
+    });
+
+    assert.ok(token, Definer.auth_err2); // tokenda xatolik bulsa kursatsin
+    return token; //xatolik bulmasa tokenni olsin.
+  } catch (err) {
+    throw err;
+  }
+};
+

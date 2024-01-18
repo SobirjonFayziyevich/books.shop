@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const {
     member_address_enums,
     member_status_enums,
-     member_type_enums, 
-     ordernary_enums} = require("../lib/config");
+    member_type_enums, 
+    ordernary_enums} = require("../lib/config");
 
 const memberSchema = new mongoose.Schema({
     // mongoose ni ichidan schema olinyabdi

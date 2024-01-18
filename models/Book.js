@@ -5,10 +5,10 @@ const {
   shapeIntoMongooseObjectId,
   lookup_auth_member_liked,
 } = require("../lib/config");
-const Member = require("../models/Member");
+const Member = require("./Member");
 const { lookup } = require("dns");
 
-class Book {
+class Bookshop {
   constructor() {
     this.memberModel = MemberModel;
   }
@@ -107,4 +107,4 @@ class Book {
   }
 }
 
-module.exports = Book;
+module.exports = Bookshop;

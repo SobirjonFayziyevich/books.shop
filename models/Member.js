@@ -1,4 +1,5 @@
 const MemberModel = require("../schema/member.model");
+const LikeModel = require ("../schema/like.model");
 const Definer = require("../lib/error");
 const assert = require("assert");
 const bcrypt = require("bcrypt");
@@ -6,8 +7,8 @@ const {
   shapeIntoMongooseObjectId,
    lookup_auth_member_following, 
    lookup_auth_member_liked } = require("../lib/config");
-// const View = require("./View");
-// const Like = require("../../bookShop/models/Like");
+const View = require("./View");
+const Like = require("../../bookShop/models/Like");
 
 class Member {
   constructor() {

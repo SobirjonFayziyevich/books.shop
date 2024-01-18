@@ -6,8 +6,8 @@ const uuid = require('uuid');
 // MULTER IMAGE STORAGE
 function getTargetImageStorage(address) {
     return multer.diskStorage({     //diststorageni yasab packageni ichiga yuklanyabdi
-        destination: function (req, file, cb) {  //qayerga yuklashini ko'rsatyabdi
-            cb(null, './uploads/members');
+        destination: (req, file, cb) => {  //qayerga yuklashini ko'rsatyabdi
+            cb(null, `./uploads/${address}`);
         },
         filename: function (req, file, cb) {
             console.log(file);
@@ -20,6 +20,6 @@ function getTargetImageStorage(address) {
 
 const makeUploader = (address) => {
     const storage = getTargetImageStorage(address);
-    return multer({storage: storage})
+    return multer({storage: storage});
 }
 module.exports = makeUploader; 

@@ -1,201 +1,192 @@
-const Member = require("../models/member");
-const member = require("../schema/member.model");
-const assert = require("assert");
-const Definer = require("../lib/error");
 const Product = require("../models/Product");
-const Book = require("../models/Book");
+const Member = require("../models/Member");
+const MemberModel = require("../schema/member.model");
+const Book = require("../models/Book")
+const Definer = require("../lib/error");
+const assert = require("assert");
 
-let bookshopController = module.exports;
+const bookshopController = module.exports;
 
 bookshopController.getBookshop = async (req, res) => {
-  
-  try {
-    console.log("GET: cont/getBookshop");
-    const data = req.query;
-    const book = new Book(); 
-    const result = await book.getBookshopData(req.member, data); 
-    res.json({ state: "success", data: result }); 
-  } catch (err) {
-    console.log(`ERROR: cont/getBookshop, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
+    try {
+        console.log("GET: cont/getBookshop");
+        const data = req.query;
+        book = new Book();
+
+        result = await book.getBookshopData(req.member, data);
+        res.json({state: "success", data: result});
+    } catch (err) {
+        console.log(`ERROR, cont/getBookshop, ${err.message}`);
+        res.json({state: "fail", message: err.message});
+    }
 };
 
 bookshopController.getChosenBookshop = async (req, res) => {
-  try {
-    console.log("GET: cont/getChosenBookshop");
-    const id = req.params.id;
-    // console.log("id:::", id);
-    const book = new Book(); 
-    const result = await book.getChosenBookshopData(req.member, id); 
+    try {
+        console.log("GET: cont/getChosenBookshop");
+        const id = req.params.id;
+        book = new Book();
 
-    res.json({ state: "success", data: result }); 
-  } catch (err) {
-    console.log(`ERROR: cont/getChosenBookshop, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
-};
+        result = await book.getChosenBookshopData(req.member, id);
+        res.json({state: "success", data: result});
+    } catch (err) {
+        console.log(`ERROR, cont/getChosenBookshop, ${err.message}`);
+        res.json({state: "fail", message: err.message});
+    }
+}
 
 /**********************************
- *         BSSR RELATED ROUTER      *
+ *    Company related methods   *
  **********************************/
-// HOME PAGE ************
-bookshopController.home = (req, res) => {
-  try {
-    console.log("GET: cont/home");
-    res.render("homepage");
-  } catch (err) {
-    console.log(`ERROR: cont/home, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
+
+
+ bookshopController.home = (req, res) => {
+    try {
+        console.log("GET: cont/home");
+        res.render('homepage');
+    } catch (err) {
+        console.log(`ERROR: cont/home, ${err.message}`);
+        res.json({state: "fail", message: err.message});
+    }
 };
 
 bookshopController.getMybookshopProducts = async (req, res) => {
-  try {
-    console.log("GET: cont/getMybookshopProducts");
-    // TODO get my bookshop products
-    const product = new Product();
-    const data = await product.getAllProductsDatabookshop(res.locals.member);
+    try {
+        console.log("GET: cont/getMybookshopProducts");
+        const product = new Product();
+        const data = await product.getAllProductsDataResto(res.locals.member);
+        res.render("book-menu", {book_data: data});
+    } catch (err) {
+        console.log(`ERROR: cont/getMybookshopProducts, ${err.message}`);
+        res.redirect("/resto");
+    }
+}
 
-    res.render("book-menu", { book_data: data });
-  } catch (err) {
-    console.log(`ERROR: cont/getMybookshopProducts, ${err.message}`);
-    res.redirect("/resto");
-    res.json({ state: "fail", message: err.message });
-  }
-};
-
-// getSignupMyBookshop Process:
 bookshopController.getSignupMyBookshop = async (req, res) => {
-  try {
-    console.log("GET: cont/getSignupMyBookshop");
-    res.render("signup");
-  } catch (err) {
-    console.log(`ERROR: cont/getSignupMyBookshop, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
+    try {
+        console.log("GET: cont/getSignupMyBookshop");
+        res.render("signup");
+    } catch (err) {
+        console.log(`ERROR: cont/getSignupMyBookshop, ${err.message}`);
+        res.json({state: "fail", message: err.message});
+    }
 };
 
-// Signup Process;
+
 bookshopController.signupProcess = async (req, res) => {
-  try {
-    console.log("POST: cont/signupProcess");
-    assert(req.file, Definer.general_err3);
-    let new_member = req.body; // qiymatini uzgartirish lozimligi un let bn berdim.
-    new_member.mb_type = "BOOKSHOP";
-    new_member.mb_image = req.file.path;
+    try {
+        console.log("POST: cont/signupProcess");
+        assert(req.file, Definer.general_err3);
+        let new_member = req.body;
+        new_member.mb_type = "BOOKSHOP";
+        new_member.mb_image = req.file.path;
 
-    const member = new Member();
-    const result = await member.signupData(new_member);
-    assert(result, Definer.general_err1);
-
-    req.session.member = result;
-    res.redirect("/resto/products/menu");
-  } catch (err) {
-    console.log(`ERROR, cont/signupProcess, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
+        const member = new Member();
+        const result = await member.signupData(new_member);
+        assert(req.file, Definer.general_err1);
+        req.session.member = result;
+        req.session.save(function () {
+            res.redirect('/resto/products/menu');
+        })
+    } catch (err) {
+        console.log(`ERROR, cont/signupProcess, ${err.message}`);
+        res.json({state: 'fail', message: err.message});
+    }
 };
 
 
-// getLoginMyBook Process
 bookshopController.getLoginMyBookshop = async (req, res) => {
-  try {
-    console.log("GET: cont/getLoginMyBookshop");
-    res.render("loginpage");
-  } catch (err) {
-    console.log(`ERROR, cont/getLoginMyBookshop, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
+    try {
+        console.log("GET: cont/getLoginMyBookshop");
+        res.render('login-page')
+    } catch (err) {
+        console.log(`ERROR, cont/getLoginMyBookshop, ${err.message}`)
+        res.json({state: "fail", message: err.message});
+    }
 };
 
-// login Process;
 bookshopController.loginProcess = async (req, res) => {
-  try {
-    console.log("POST: cont/loginProcess");
-    const data = req.body,
-      member = new Member(), 
-      result = await member.loginData(data); 
+    try {
+        console.log("POST: cont/loginProcess");
+        const data = req.body,
+            member = new Member();
+        result = await member.loginData(data);
 
-    // SESSION AUTHENTICATION
-    req.session.member = result;
-    req.session.save(() => {
-      result.mb_type === "ADMIN"
-        ? res.redirect("/resto/all-book")
-        : res.redirect("/resto/products/menu");
-    });
-  } catch (err) {
-    // res.json({ state: "success", data: result});
-    console.log(`ERROR, cont/loginProcess, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
+        req.session.member = result;
+        req.session.save(function () {
+            result.mb_type === "ADMIN"
+                ? res.redirect("/resto/all-book")
+                : res.redirect("/resto/products/menu");
+        });
+    } catch (err) {
+        console.log(`ERROR, cont/login, ${err.message}`)
+        res.json({state: "fail", message: err.message});
+    }
 };
 
 bookshopController.logout = (req, res) => {
-  try {
-    console.log("GET cont/logout");
-    req.session.destroy(function () {
-      res.redirect("/resto");
-    });
-  } catch (err) {
-    console.log(`ERROR,cont/logout, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
+    try {
+        console.log("GET cont/logout");
+        req.session.destroy(function () {
+            res.redirect("/resto");
+        });
+    } catch (err) {
+        console.log(`ERROR, cont/logout, ${err.message}`);
+        res.json({state: "fail", message: err.message});
+    }
 };
 
 bookshopController.validateAuthbookshop = (req, res, next) => {
-  if (req.session?.member?.mb_type === "BOOKSHOP") {
-    req.member = req.session.member;
-    next();
-  } else
-    res.json({
-      state: "fail",
-      message: "only authenticated members with restaurant type",
-    });
-};
-
-bookshopController.checkSession = (req, res) => {
-  if (req.session?.member) {
-    res.json({ state: "success", data: req.session.member });
-  } else {
-    res.json({ state: "fail", message: "You aren't authenticated" });
-  }
+    if (req.session?.member?.mb_type === "BOOKSHOP") {
+        req.member = req.session.member;
+        next();
+    } else res.json({state: "fail", message: "only authenticated members with book type"})
 };
 
 bookshopController.validateAdmin = (req, res, next) => {
-  if (req.session?.member?.mb_type === "ADMIN") {
-    req.member = req.session.member;
-    next();
-  } else {
-    const html = `<script>         
-            alert('Admin page: Permission denied!');
-            window.location.replace('/resto'); 
-            </script>`;
-    res.end(html);
-  }
+    if (req.session?.member?.mb_type === "ADMIN") {
+        req.member = req.session.member;
+        next();
+    } else {
+        const html = `<script>
+                      alert("Admin page: Permission denied!");
+                      window.location.replace("/resto");
+                      </script>`
+        res.end(html);
+    }
+};
+
+bookshopController.checkSessions = (req, res) => {
+    if (req.session?.member) {
+        res.json({state: 'success', data: req.session.member});
+    } else {
+        res.json({state: "fail", message: "You aren't authenticated"});
+    }
 };
 
 bookshopController.getAllBookshop = async (req, res) => {
-  try {
-    console.log("GET cont/getAllBookshop");
+    try {
+        console.log("GET cont/getAllBookshop");
+        const book = new Book();
+        const book_data = await book.getAllBookshopData();
+        res.render("all-book", {book_data: book_data});
 
-    const book = new Book(),
-      book_data = await book.getAllBookshopData();
-    res.render("all-book", { book_data: book_data });
-  } catch (err) {
-    console.log(`ERROR,cont/getAllBookshop, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
-};
+    } catch (err) {
+        console.log(`ERROR, cont/getAllBookshop, ${err.message}`);
+        res.json({state: "fail", message: err.message});
+    }
+}
+
 
 bookshopController.updateBookshopByAdmin = async (req, res) => {
-  try {
-    console.log("GET cont/updateBookshopByAdmin");
-    const book = new Book();
-    const result = await book.updateBookshopByAdminData(req.body);
-    await res.json({ state: "success", data: result });
-  } catch (err) {
-    console.log(`ERROR,cont/updateBookshopByAdmin, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
-  }
-};
+    try {
+        console.log("GET cont/updateBookshopByAdmin");
+
+        const book = new Book();
+        const result = await book.updateBookshopByAdminData(req.body);  // body qismdan datani oladi
+        await res.json({state: "success", data: result});  // natija success bolsa res.json ko'rinishda front-ent ga  ma'lumot yuboryabdi
+    } catch (err) {
+        console.log(`ERROR, cont/updateBookshopByAdmin, ${err.message}`);
+        res.json({state: "fail", message: err.message});
+    }
+}

@@ -4,9 +4,7 @@ const bookshopController = require("./controllers/bookshopController");
 const productController = require("./controllers/productController");
 const uploader = require("./utils/upload-multer");
 
-// const { uploadProductImage } = require("./utils/upload-multer");
-// const uploader_members = require("./utils/upload-multer")("members");
-// const uploader_product = require("./utils/upload-multer")("products");
+
 /**********************************
  *         BSSR  EJS             *
  **********************************/
@@ -22,7 +20,7 @@ router_bssr
   .post("/login", bookshopController.loginProcess);
 
 router_bssr.get("/logout", bookshopController.logout);
-router_bssr.get("/check-me", bookshopController.checkSession);
+router_bssr.get("/check-me", bookshopController.checkSessions);
 
 router_bssr.get("/products/menu", bookshopController.getMybookshopProducts);
 router_bssr.post(

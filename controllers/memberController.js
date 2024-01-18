@@ -65,3 +65,90 @@ memberController.createToken = (result) => {
   }
 };
 
+memberController.checkMyAuthentication = (req, res) => {
+  try {
+    console.log("GET cont/checkMyAuthentication");
+    let token = req.cookies["access_token"];
+    // console.log("token:::", token);
+
+    const member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
+    assert.ok(member, Definer.auth_err2);
+
+    res.json({ state: "success", data: member });
+  } catch (err) {
+    throw err;
+  }
+};
+
+memberController.getChosenMember = async (req, res) => {
+  try {
+    console.log("GET cont/getChosenMember");
+    const id = req.params.id;
+
+    const member = new Member(); //Service modeldan object olayopmiz.
+    const result = await member.getChosenMemberData(req.member, id); //1chi argument(req.member) kimbu req 1chi amalga oshirayopti,
+    // 2chi argument (id) bu kimni datasini kurmoqchimiz.
+
+    res.json({ state: "success", data: result });
+  } catch (err) {
+    console.log(`ERROR, cont/getChosenMember, ${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+
+memberController.likeMemberChosen = async (req, res) => {
+  try {
+    console.log("POST cont/likeMemberChosen");
+
+    assert.ok(req.member, Definer.auth_err5);
+    const member = new Member(); //Service modeldan object olayopmiz.
+    const like_ref_id = req.body.like_ref_id;
+    group_type = req.body.group_type; // qanday turdagi targetni like qilayopman, buni req.bodyni ichiga group type nomi bn olayopman.
+
+    const result = await member.likeChosenItemByMember(
+      req.member,
+      like_ref_id,
+      group_type
+    );
+
+    res.json({ state: "success", data: result });
+  } catch (err) {
+    console.log(`ERROR, cont/likeMemberChosen, ${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+
+memberController.updateMember = async (req, res) => {
+  try {
+    console.log("POST: cont/updateMember");
+    //   console.log(req.body);
+    //   console.log(req.file);
+    assert.ok(req.member, Definer.auth_err3);
+    const data = req.body;
+    const member = new Member();
+    const result = await member.updateMemberData(
+      req.member?._id,
+      req.body,
+      req.file
+    ); //updateMemberDtaega qanday qiymatlar kirishi kerak; req_memberni Idsi, rq.body va req.file;
+    console.log("result;;;", result);
+    res.json({ state: "success", data: result });
+  } catch (err) {
+    console.log(`ERROR, cont/updateMember, ${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+
+memberController.retrieveAuthMember = (req, res, next) => {
+  try {
+    const token = req.cookies["access_token"];
+    req.member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
+    //agar req.member ichida TOKEN mavjud bulsa,login bulga USER datalarini member ichiga quyib beradi. mavjud bulmasa null quyib beradi.
+    next();
+  } catch (err) {
+    console.log(`ERROR, cont/retrieveAuthMember, ${err.message}`); // hattoki, xato bulsa ham keyingi bosqichga utkazadi.
+    next(); // login bulgan va bulmaganlar kirb foydalanishi uchun.
+  }
+};
+
+

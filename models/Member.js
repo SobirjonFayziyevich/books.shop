@@ -34,7 +34,7 @@ class Member {
     } catch (err) {
       throw err;
     }
-  }
+  };
 
   async loginData(input) {
     try {

@@ -2,8 +2,11 @@ const express = require("express");
 const router_bssr = express.Router(); // expressni ichidan router olib chiqilyabdi
 const bookshopController = require("./controllers/bookshopController");
 const productController = require("./controllers/productController");
-const { uploadProductImage } = require("./utils/upload-multer");
+const uploader = require("./utils/upload-multer");
 
+// const { uploadProductImage } = require("./utils/upload-multer");
+// const uploader_members = require("./utils/upload-multer")("members");
+// const uploader_product = require("./utils/upload-multer")("products");
 /**********************************
  *         BSSR  EJS             *
  **********************************/
@@ -12,7 +15,7 @@ router_bssr.get("/", bookshopController.home);
 
 router_bssr
   .get("/signup", bookshopController.getSignupMyBookshop)
-  .post("/signup", bookshopController.signupProcess);
+  .post("/signup",  uploader("members").single("book_img"),bookshopController.signupProcess);
 
 router_bssr
   .get("/login", bookshopController.getLoginMyBookshop)
@@ -25,7 +28,7 @@ router_bssr.get("/products/menu", bookshopController.getMybookshopProducts);
 router_bssr.post(
   "/products/create",
   bookshopController.validateAuthbookshop,
-  uploadProductImage.array("product_images", 5),
+  uploader("products").array("product_images", 5),
   productController.addNewProduct
 );
 

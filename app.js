@@ -1,8 +1,12 @@
 console.log("Starting Web Server");
+// const http=require("http");
 const express = require("express");
 const app = express();
 const router = require("./router");
 const router_bssr = require("./router_bssr");
+const cookieParser = require("cookie-parser");
+// const cors = require('cors'); 
+
 
 let session = require("express-session"); // call express sessionni
 const MongoDBStore = require("connect-mongodb-session")(session); 

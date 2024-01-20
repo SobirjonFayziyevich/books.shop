@@ -1,31 +1,30 @@
-<%- include("includes/header") %>
-
-<link rel="stylesheet" type="text/css" href="/css/signup.css" />
-
+<%-include('includes/header')%>
+<link rel="stylesheet" type="text/css" href="/css/login.css" />
 <body>
   <form
     onsubmit="return validateSignUpForm()"
-    class="singup_container"
+    class="login_container"
     action="/resto/signup"
     method="POST"
     enctype="multipart/form-data"
   >
     <div class="login_frame" style="width: 650px; height: 730px">
       <div class="login_top">
-        <span>Sing up</span>
+        <span>Sign up</span>
         <div>
-          Bosh sahifaga qaytish
-          <a href="/resto" style="color: #6440fb">Home</a>
+          Back to Homepage |
+          <a style="color: #6440fb" href="/#">Home</a>
         </div>
         <p>
-          Ro'yhatdan allaqachon o'tganmisiz?
-          <a href="/resto/login" style="color: #6440fb">Login</a>
+          Already registered? |
+          <a style="color: #6440fb" href="/resto/login">Login</a>
         </p>
       </div>
+      
 
       <div class="sign-input_frame">
         <div class="sign_up_frame">
-          <label>user name</label>
+          <label>Username</label>
           <input
             type="text"
             name="mb_nick"
@@ -74,16 +73,20 @@
 
       <div class="login_input_frame">
         <div class="media_frame">
-          <img class="upload_img_frame" src="/images/uploadbook.png" />
+          <img
+            class="upload_img_frame"
+           src="/images/uploadbook.png"
+            alt="default_book"
+          />
           <div class="upload_container">
-            <span class="media_text">upload lagotip</span>
+            <span class="media_text">Book photo</span>
             <div class="filebox bs3-primary preview-image">
               <input
-                class="upload-name"
-                value="choose file"
                 disabled="disabled"
+                value="Select a photo"
+                class="upload-name"
               />
-              <label for="input_file"> upload </label>
+              <label for="input_file">Upload a photo</label>
               <input
                 type="file"
                 id="input_file"
@@ -92,68 +95,65 @@
               />
             </div>
             <p class="thumbnail_desc">
-              Please upload picture of book<br />
-              Notice: only type: .jpg, .jpeg yoki .png. <br />rasmda matn yo'q
-              bo'lishi kerak!
+              (Upload required photo types: jpg, jpeg, png)
             </p>
           </div>
         </div>
       </div>
-      <button class="login_btn btn" name="signup" type="submit">Submit</button>
+      <button class="login_btn btn" name="signup" type="submit">Signup</button>
     </div>
   </form>
-</body>
-
-<script>
-  $(function () {
-    let fileTarget = $(".filebox .upload-hidden");
-    let filename = "";
-    fileTarget.on("change", function () {
-      if (window.FileReader) {
-        const uploading_file = $(this)[0].files[0];
-        const fileType = uploading_file["type"];
-        const validImagesTypes = ["image/jpg", "image/jpeg", "image/png"];
-        if (!validImagesTypes.includes(fileType)) {
-          alert(
-            "iltimos ruxsat berilgan formatdagi rasmlarni yuklang. jpg,  jpeg, png"
-          );
-        } else {
-          if (uploading_file) {
-            console.log(URL.createObjectURL(uploading_file));
-            $(".upload_img_frame")
-              .attr("src", URL.createObjectURL(uploading_file))
-              .addClass("success");
+  <script>
+    $(function () {
+      let fileTarget = $(".filebox .upload-hidden");
+      let filename = "";
+      fileTarget.on("change", function () {
+        if (window.FileReader) {
+          const uploading_file = $(this)[0].files[0];
+          console.log($(this)[0].files[0]);
+          const fileType = uploading_file["type"];
+          const validImgTypes = ["image/jpg", "image/jpeg", "image/png"];
+          if (!validImgTypes.includes(fileType)) {
+            alert("Please, Upload required photo types: (jpg, jpeg, png)");
+          } else {
+            if (uploading_file) {
+              console.log(URL.createObjectURL(uploading_file));
+              $(".upload_img_frame")
+                .attr("src", URL.createObjectURL(uploading_file))
+                .addClass("succeed");
+            }
+            filename = uploading_file.name;
           }
-          filename = uploading_file.name;
         }
-      }
-      $(this).siblings(".upload-name").val(filename);
+        $(this).siblings(".upload-name").val(filename);
+      });
     });
-  });
-
-  //  Signup Page develop Start.
-  function validateSignUpForm() {
-    const mb_nick = $(".mb_nick").val();
-    const mb_phone = $(".mb_phone").val();
-    const mb_password = $(".mb_password").val();
-    const mb_address = $(".mb_address").val();
-    const book_img = $(".book_img").get(0).files[0] ?? null; // agar mavjud bolsa ozini ol yoki null qoy deyabmiz
-
-    if (
-      mb_nick === "" ||
-      mb_phone === "" ||
-      mb_password === "" ||
-      mb_address === ""
-    ) {
-      alert("iltimos hamma ma'lumotlarni kiriitng");
-      return false;
+    function validateSignUpForm() {
+      const mb_nick = $(".mb_nick").val();
+      const mb_email = $(".mb_email").val();
+      const mb_password = $(".mb_password").val();
+      const mb_confirm_password = $(".mb_confirm_password").val();
+      const book_img = $(".book_img").get(0).files[0] ?? null;
+      if (
+        mb_nick == "" ||
+        mb_password == "" ||
+        mb_email == "" ||
+        mb_confirm_password == ""
+      ) {
+        alert("Please, Input all information correctly!");
+        return false;
+      } else if (mb_password !== mb_confirm_password) {
+        alert("Please, Input the same passwords");
+        return false;
+      }
+      if (!book_img) {
+        alert("Please, Upload a photo!");
+        return false;
+      }
+      return true;
     }
-    if (!book_img) {
-      alert("iltimos rasmni yuklang!");
-      return false;
-    }
-    return true;
-  }
-</script>
+  </script>
+</body>
+<%-include('includes/footer')%>
 
-<%- include("includes/footer") %>
+

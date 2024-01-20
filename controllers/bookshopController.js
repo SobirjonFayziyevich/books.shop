@@ -50,7 +50,7 @@ bookshopController.getChosenBookshop = async (req, res) => {
     }
 };
 
-bookshopController.getMybookshopProducts = async (req, res) => {
+bookshopController.getMybookshopData = async (req, res) => {
     try {
         console.log("GET: cont/getMybookshopProducts");
         const product = new Product();

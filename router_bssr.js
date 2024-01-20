@@ -25,7 +25,7 @@ router_bssr
 router_bssr.get("/logout", bookshopController.logout);
 router_bssr.get("/check-me", bookshopController.checkSessions);
 
-router_bssr.get("/products/menu", bookshopController.getMybookshopProducts);
+router_bssr.get("/products/menu", bookshopController.getMybookshopData);
 router_bssr.post(
   "/products/create",
   bookshopController.validateAuthbookshop,

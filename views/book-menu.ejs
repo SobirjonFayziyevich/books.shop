@@ -41,10 +41,6 @@
                         <td><%= key + 1 %></td>     
                         <td><%= value.product_name %></td>    
                         <td><%= value.product_collection %></td>
-                        <!-- <td>
-                            <%= value.product_collection === 'drink' ? value.product_volume
-                                    : value.product_size %>
-                        </td> -->
                         <td><%= value.product_price %></td>
                         <td><%= value.product_left_cnt %></td>    
                         <td>
@@ -99,11 +95,11 @@
                     <div class="half_input">
                         <label>Type of book</label>
                         <select class="product_collection" name="product_collection">
-                            <option value="thriller">Thriller</option>
-                            <option value="history">History</option>
-                            <option value="detective">Detective</option>
-                            <option value="poetry">Poetry</option>
-                            <option value="atc">Others</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="History" selected>History</option>
+                            <option value="Detective">Detective</option>
+                            <option value="Poetry">Poetry</option>
+                            <option value="">etc</option>
                         </select>
                     </div>
 
@@ -121,12 +117,12 @@
 
 
                 <div class="long_input">
-                    <label>About of book</label>
+                    <label>Information</label>
                     <textarea name="product_description" class="product_description"></textarea>
                 </div>
 
                 <div class="img_frame">
-                    <label>Book Images</label>
+                    <label>images</label>
                     <div class="media_frame">
                         <div class="upload_img_box">
                             <img src="/images/uploads.svg" class="1" id="image_section_1">
@@ -176,19 +172,8 @@
 <script>
     $(function () {  
 
-        $(".product_collection").on("change", () => {
-            const selected_value=$(".product_collection").val();
-            if (selected_value === 'drink') {
-                $("#product_volume").show(); 
-                $("#product_size").hide();    
-            } else {
-                $("#product_volume").hide();
-                $("#product_size").show();
-            }
-        });
-
         $(".hiding_btn").on("click", () => {   // button tugma bosilganda dish_container ichidagi mahsulotlarni qushsin
-            $(".book_container").slideToggle(500);
+            $(".dish_container").slideToggle(500);
             $(".hiding_btn").css("display", "none");
         });
 

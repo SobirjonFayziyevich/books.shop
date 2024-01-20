@@ -4,7 +4,6 @@ const bookshopController = require("./controllers/bookshopController");
 const productController = require("./controllers/productController");
 const uploader = require("./utils/upload-multer");
 
-
 /**********************************
  *         BSSR  EJS             *
  **********************************/
@@ -13,7 +12,11 @@ router_bssr.get("/", bookshopController.home);
 
 router_bssr
   .get("/signup", bookshopController.getSignupMyBookshop)
-  .post("/signup",  uploader("members").single("book_img"),bookshopController.signupProcess);
+  .post(
+    "/signup",
+    uploader("members").single("product_image "),
+    bookshopController.signupProcess
+  );  
 
 router_bssr
   .get("/login", bookshopController.getLoginMyBookshop)
@@ -29,13 +32,11 @@ router_bssr.post(
   uploader("products").array("product_images", 5),
   productController.addNewProduct
 );
-
 router_bssr.post(
-  "products/edit/:id",
+  "/products/edit/:id",
   bookshopController.validateAuthbookshop,
   productController.updateChosenProduct
 );
-
 router_bssr.get(
   "/all-book",
   bookshopController.validateAdmin,
@@ -47,6 +48,7 @@ router_bssr.post(
   bookshopController.validateAdmin,
   bookshopController.updateBookshopByAdmin
 );
+
 
 // export router
 module.exports = router_bssr;

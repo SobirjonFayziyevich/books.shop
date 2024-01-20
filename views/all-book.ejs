@@ -1,0 +1,114 @@
+<%- include('includes/header') %>
+<link rel="stylesheet" type="text/css" href="/css/menu.css"/>
+<body>
+<div id="main_container">
+
+    <div class="group_name">
+        <ul class="nav justify-content-center">
+            <li class="nav-item" style="cursor: pointer">
+                <a class="nav-link active" href="/resto">Home</a>        <!-- atributlar (GET) traditional get-->
+            </li>
+            <li class="nav-item" style="cursor: pointer">
+                <a class="nav-link" href="/resto/all-book">AllResto</a>
+            </li>
+            <li class="nav-item" style="cursor: pointer">
+                <a class="nav-link" href="/resto/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="book_menu_frame">
+        <div class="book_container">
+            <div class="resto_table">
+                <span class="new_dish_txt">
+                    All Bookshop Menu
+                </span>
+
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                    <tr class = "thead-light">
+                    <th scope="col">T/r</th>
+                    <th scope="col"> Book name  </th>
+                    <th scope="col"> Shop Phone number </th>
+                    <th scope="col"> Bookshop TOP </th>
+                    <th scope="col"> Status </th>
+                    </tr>
+                    </thead>
+
+                    <% book_data.map(function(value, key) { %>  // array bulgani un map qilayopmiz
+                    <tbody style="background: white">
+                    a<td><%= key + 1 %></td>                           // indexni 1 dan boshlansin.
+               <td> <%= value.mb_nick %> </td>        <!--  restarantni nomi valueni ichida mb_nick buladi. -->
+                    <td><%= value.mb_phone %> </td>
+                    <td style="width: 13%;">
+                        <label class="switch">
+   <!-- mongodb hosil qilib bergan (id)dan foydalandik. //top rest bulsa,check holatda bulishi kerak, top rest ruyxatida bulmasa, check holarda bulmasin.-->
+<!-- (id)ni keyinchalik JQUARYDA olishga tugri keladi shuni un (id) beramiz.-->
+                            <input type="checkbox" class="mb_top" id="<%= value._id %>"
+                                 <%= value.mb_top === 'Y' ? 'checked' : '' %> />     <!--agar (value) (mb_top)ning qiymati (YES)bulganda CHECK bulsin,-->
+                                                                                       <!--YES bulmasa hech qanday qiymat olmasin-->
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                    <td style="width: 13%;">
+                        <select class="spec_select mb_status" id="<%= value._id %>">       //mb_statusni keyinchalik Jqeuryda ishlatishimiz un yozib ketamiz.
+                                                                     //oshxona holatini uzgartira oladigan option lar
+                            <option value="ONPAUSE" <%= value.mb_status === 'ONPAUSE' ? 'selected' : '' %> >ONPAUSE</option>
+                            <option value="ACTIVE" <%= value.mb_status === 'ACTIVE' ? 'selected' : '' %> >ACTIVE</option>
+                            <option value="DELETED" <%= value.mb_status === 'DELETED' ? 'selected' : '' %>>DELETED</option>
+                        </select>
+                    </td>
+                    </tbody>
+                    <% }); %>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        // manipulate restaurants top features.
+
+        $(".mb_top").on("change", function (e) {  // (E) bu event .
+            // alert('amalga oshirdim');
+            const id = e.target.id;   //event bydefault kirib keladi va kerak bulgan resta (id) beradi.
+            const mb_top = e.target.checked ? 'Y' : 'N';  //mb_top_status checked bul,yes bulmasa No kurinishida bul.
+
+            axios.post('/resto/all-book/edit',{id: id, mb_top: mb_top})
+                .then(response => {
+                const result = response.data;               // buni ichiga state: "success", data: result qiymati beriladi.
+                    if(result.state === 'success') alert('successfully update');
+                    else alert(result.message);            //agar fail bul, result ichida messageni kursatsin.
+                })
+                .catch(err => console.log(err));
+        });
+
+        // manipulate restaurants status features.
+
+        $(".mb_status").on("change", function (e) {  // (E) bu event .
+            // alert('amalga oshirdim');
+            const id = e.target.id;   //event bydefault kirib keladi va kerak bulgan resta (id) beradi.
+            const mb_status = $(`#${id}.mb_status`).val();  //mb_top_status checked bul,yes bulmasa No kurinishida bul.
+
+            console.log("mb_status:", mb_status);
+
+            axios.post('/resto/all-book/edit',{id: id, mb_status: mb_status})
+                .then(response => {
+                    const result = response.data;               // buni ichiga state: "success", data: result qiymati beriladi.
+                    if(result.state === 'success') alert('successfully update');
+                    else alert(result.message);            //agar fail bul, result ichida messageni kursatsin.
+                })
+                .catch(err => console.log(err));
+        });
+
+
+    });
+
+</script>
+
+</body>
+
+<%- include('includes/footer') %>

@@ -28,7 +28,7 @@ const memberSchema = new mongoose.Schema({
     mb_type: {
         type: String,
         required: false,
-        default: "USER",
+        default: "BOOKSHOP",
         enum: {
             values: member_type_enums,
             message: "{VALUE} is not among permitted values " // valueni ichida bulmagan tashqaridan malumot kelsa xatolik bulsin.
@@ -51,7 +51,7 @@ const memberSchema = new mongoose.Schema({
     mb_address: {
         type: String,
         required: false,
-        default: "surkhandaryo",
+        default: "Pusan",
         enum: {
             values: member_address_enums,
             message: "{VALUE} is not among permitted values "

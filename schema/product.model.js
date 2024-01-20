@@ -3,7 +3,6 @@ const {
   product_collection_enums,
   product_status_enums,
   product_size_enums,
-  product_volume_enums,
 } = require("../lib/config");
 const Schema = mongoose.Schema;
 const productSchema = new mongoose.Schema(
@@ -15,6 +14,7 @@ const productSchema = new mongoose.Schema(
     product_collection: {
       type: String,
       required: true,
+      default: "triller",
       enum: {
         values: product_collection_enums,
         message: "{VALUES} is not among permitted values",
@@ -74,7 +74,7 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
   
-    bookshop_mb_id: {
+    book_mb_id: {
       type: Schema.Types.ObjectId,
       ref: "Member",
       required: false,
@@ -85,7 +85,7 @@ const productSchema = new mongoose.Schema(
 
 productSchema.index( // bir xil qiymatli nahsulotni qushmasin ADD holatida.
   {
-    bookshop_mb_id: 1,
+    book_mb_id: 1,
     product_name: 1,
     product_size: 1,
     product_volume: 1,

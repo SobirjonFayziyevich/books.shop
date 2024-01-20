@@ -36,7 +36,7 @@
                         </tr>
                         </thead>
 
-                    <% restaurant_data.map((value, key) => { %>
+                    <% book_data.map((value, key) => { %>
                         <tbody style="background: white">
                         <td><%= key + 1 %></td>     
                         <td><%= value.product_name %></td>    
@@ -102,7 +102,7 @@
                             <option value="thriller">Thriller</option>
                             <option value="history">History</option>
                             <option value="detective">Detective</option>
-                            <option value="poety">Poety</option>
+                            <option value="poetry">Poetry</option>
                             <option value="atc">Others</option>
                         </select>
                     </div>
@@ -224,7 +224,7 @@
   // function yozayotganimiz un JQUARYdan tashqarida yozamiz.
     function validateForm() {
 
-        const bookshop_mb_id=$(".bookshop_mb_id").val(),
+        const book_mb_id=$(".book_mb_id").val(),
             product_name=$(".product_name").val(),
             product_price=$(".product_price").val(),
             product_left_cnt=$(".product_left_cnt").val(),
@@ -233,7 +233,7 @@
             product_status=$(".product_status").val();
 
         if (
-            bookshop_mb_id == '' ||
+            book_mb_id == '' ||
             product_name == '' ||
             product_price == '' ||
             product_left_cnt == '' ||
@@ -266,4 +266,4 @@
 </script>
 </body>
 
-<%- include("includes/footer") %>
+<%- include("includes/footer") %></div>

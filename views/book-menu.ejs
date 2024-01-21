@@ -7,10 +7,10 @@
     <div class="group_name">
         <ul class="nav justify-content-center">
             <li class="nav-item" style="cursor: pointer">
-                <a class="nav-link active" href="/resto">Home</a>        <!-- atributlar (GET) traditional get-->
+                <a class="nav-link active" href="/resto">Home</a>
             </li>
             <li class="nav-item" style="cursor: pointer">
-                <a class="nav-link" href="/resto/products/menu">Book</a>
+                <a class="nav-link" href="/resto/products/menu">My Book</a>
             </li>
             <li class="nav-item" style="cursor: pointer">
                 <a class="nav-link" href="/resto/logout">Logout</a>
@@ -24,7 +24,8 @@
                     <span class="new_dish_txt">
                         <%= member.mb_nick.toUpperCase() %> All book menu
                     </span>
-                <table class="table table-bordered table-hover">
+
+                <table class="table table-success table-striped"> <!-- tableni documentationdan kurinishini oldim-->
                     <thead class="thead-light">
                         <tr class = "thead-light">
                         <th scope="col">T/r</th>

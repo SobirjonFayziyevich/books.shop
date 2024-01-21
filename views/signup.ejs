@@ -51,14 +51,14 @@
         <div class="sign_up_frame">
           <label>Password</label>
           <input
-            type="password"
-            name="mb_password"
-            class="mb_password"
-            placeholder="input password"
-            value=""
-            required
+                  type="password"
+                  name="mb_password"
+                  class="mb_password"
+                  placeholder="input password"
+                  value=""
+                  required
           />
-        </div>
+      </div>
         <div class="sign_up_frame">
           <label>mb address</label>
           <select class="mb_address" name="mb_address">
@@ -75,7 +75,7 @@
         <div class="media_frame">
           <img
             class="upload_img_frame"
-           src="/images/uploadbook.png"
+           src="/images/upload.jpg"
             alt="default_book"
           />
           <div class="upload_container">
@@ -130,27 +130,24 @@
     });
     function validateSignUpForm() {
       const mb_nick = $(".mb_nick").val();
-      const mb_email = $(".mb_email").val();
+      const mb_phone = $(".mb_phone").val();
       const mb_password = $(".mb_password").val();
-      const mb_confirm_password = $(".mb_confirm_password").val();
+      const mb_address= $(".mb_address").val();
       const book_img = $(".book_img").get(0).files[0] ?? null;
       if (
-        mb_nick == "" ||
-        mb_password == "" ||
-        mb_email == "" ||
-        mb_confirm_password == ""
+        mb_nick === ''
+        || mb_phone === ''
+        || mb_password === ''
+        || mb_address === ''
       ) {
-        alert("Please, Input all information correctly!");
-        return false;
-      } else if (mb_password !== mb_confirm_password) {
-        alert("Please, Input the same passwords");
-        return false;
-      }
-      if (!book_img) {
-        alert("Please, Upload a photo!");
-        return false;
-      }
-      return true;
+        alert("iltimos hamma ma'lumotlarni kiriitng");
+            return false;
+        }
+        if (!book_img) {
+            alert("iltimos rasmni yuklang!");
+            return false;
+        }
+        return true;
     }
   </script>
 </body>

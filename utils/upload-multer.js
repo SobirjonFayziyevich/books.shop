@@ -5,7 +5,7 @@ const uuid = require("uuid");
 /* MULTER IMAGES UPLOADER*/
 function getTargetImageStorage(address) {
   return multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: function(req, file, cb) {
       cb(null, `./uploads/${address}`);
     },
     filename: (req, file, cb) => { //cb=> callback function
@@ -23,17 +23,3 @@ const makeUploader = (address) => {
   //1-storage multerni talab etilgan indexi
 };
 module.exports = makeUploader;
-
-const product_storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads/products");
-  },
-  filename: (req, file, cb) => {
-    console.log(file);
-    const extension = path.parse(file.originalname).ext; //documantation buyicha
-    //ext bu originalnamedagi .jpeg extentionni olib beradi.
-    const random_name = uuid.v4() + extension;
-    cb(null, random_name);
-  },
-});
-module.exports.uploadProductImage = multer({ storage: product_storage });

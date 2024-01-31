@@ -26,8 +26,8 @@ class Product {
 
       const sort =
         data.order === "product_price"
-          ? { [data.order]: 1 }
-          : { [data.order]: -1 };
+          ? { [data.order]: 1 } // arzon narxdan boshlab.
+          : { [data.order]: -1 }; //qiymati yuqoridan pastga.
 
       const result = await this.productModel
         .aggregate([

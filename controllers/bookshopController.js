@@ -11,7 +11,7 @@ bookshopController.getBookshop = async (req, res) => {
     try {
         console.log("GET: cont/getBookshop");
         const data = req.query;
-        book = new Book();
+        const book = new Book();
 
         result = await book.getBookshopData(req.member, data);
         res.json({state: "success", data: result});
@@ -25,7 +25,7 @@ bookshopController.getChosenBookshop = async (req, res) => {
     try {
         console.log("GET: cont/getChosenBookshop");
         const id = req.params.id;
-        book = new Book();
+        const book = new Book();
 
         result = await book.getChosenBookshopData(req.member, id);
         res.json({state: "success", data: result});

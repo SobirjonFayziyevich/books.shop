@@ -34,6 +34,13 @@ memberController.login = async (req, res) => {
       member = new Member(), // member service modeldan instance olinyabdi
       result = await member.loginData(data); //ichida request body yuborilyabdi
 
+      const token = memberController.createToken(result);
+      console.log("token:::", tolen);
+      res.cookie("access_token", token, {
+        maxAge: 6 * 3600 * 1000,
+        httpOnly: false,
+      });
+
     res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR, cont/login, ${err.message}`);
@@ -42,10 +49,9 @@ memberController.login = async (req, res) => {
 };
 
 memberController.logout = (req, res) => {
-  console.log("GET cont.logout");
-  res.send("logout page");
-
-  // access_token
+  console.log("GET cont/logout");
+  res.cookie("access_token", null, {maxAge: 0, httpOnly: true});
+  res.json({ state: "success", data: "logout successfully!" }); 
 };
 
 memberController.createToken = (result) => {

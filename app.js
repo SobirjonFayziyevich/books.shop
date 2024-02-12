@@ -5,7 +5,7 @@ const app = express();
 const router = require("./router");
 const router_bssr = require("./router_bssr");
 const cookieParser = require("cookie-parser");
-// const cors = require('cors'); 
+const cors = require('cors'); 
 
 
 let session = require("express-session"); // call express sessionni
@@ -21,6 +21,12 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+    credentials: true,
+    origin: true,    // harqanday domendan kelayotgan requestni qabul qilsin.
+})
+);
+app.use(cookieParser());
 
 // 2: Session codes
 app.use(

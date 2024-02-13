@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const memberController = require("./controllers/memberController");
+const followController = require("./controllers/followController");
 const productController = require("./controllers/productController");
 const { getChosenMember } = require("./controllers/memberController");
 const { getAllProducts } = require("./controllers/productController");
@@ -70,7 +71,7 @@ router.get(
   bookshopController.getChosenBookshop
 );
 
-// API URL => community/create, orders/edit, restaurant, products mamashu mathodlar API URl hisoblanadi.
+
 // COMMUNITY RELATED ROUTERS START:
 router.post(
   "/community/image",
@@ -101,6 +102,28 @@ router.get(
   memberController.retrieveAuthMember, // buyerda harqanday atriclega like bosganmizmi, yuqmi shuni topish un uzimizni retrive qilishimz kerak.
   communityController.getChosenArticle
 );
+
+//  Following related router;
+router.post(
+  "/follow/subscribe",
+  memberController.retrieveAuthMember,
+  followController.subscribe
+);
+
+router.post(
+  "/follow/unsubscribe",
+  memberController.retrieveAuthMember,
+  followController.unsubscribe
+);
+
+router.get("/follow/followings", followController.getMemberFollowings);
+
+router.get(
+  "/follow/followers",
+  memberController.retrieveAuthMember,
+  followController.getMemberFollowers
+);
+
 
 
 

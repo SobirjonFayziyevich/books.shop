@@ -2,20 +2,23 @@ const express = require("express");
 const router_bssr = express.Router(); // expressni ichidan router olib chiqilyabdi
 const bookshopController = require("./controllers/bookshopController");
 const productController = require("./controllers/productController");
- const uploader_product = require("./utils/upload-multer")("products");
-const uploader_member = require("./utils/upload-multer")("members");
+ const uploader = require("./utils/upload-multer");
+
 
 
 /**********************************
  *         BSSR  EJS             *
  **********************************/
 // traditionda front-end da view ishlamaydi o'rniga json formatda ma'lumot boradi
+// memberga dahldor routerlar.
 router_bssr.get("/", bookshopController.home);
  
   router_bssr.get("/signup", bookshopController.getSignupMyBookshop);
-  router_bssr.post("/signup",uploader_product.single("product_image"),
+  router_bssr.post(
+    "/signup",
+    uploader("members").single("shop_image"),
   bookshopController.signupProcess
-  );
+  );     
 
 router_bssr
   .get("/login", bookshopController.getLoginMyBookshop)
@@ -28,7 +31,7 @@ router_bssr.get("/products/menu", bookshopController.getMybookshopData);
 router_bssr.post(
   "/products/create",
   bookshopController.validateAuthbookshop,
-  uploader_product.array("product_images", 5),
+  uploader("products").array("book_images", 5),
   productController.addNewProduct
 );
 router_bssr.post(

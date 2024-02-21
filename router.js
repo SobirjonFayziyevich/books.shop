@@ -6,9 +6,10 @@ const productController = require("./controllers/productController");
 const { getChosenMember } = require("./controllers/memberController");
 const { getAllProducts } = require("./controllers/productController");
 const communityController = require("./controllers/communityController");
+const orderController = require("./controllers/orderController");
 const bookshopController = require("./controllers/bookshopController");
 const uploader_community = require("./utils/upload-multer")("community"); //community adressi.
-const uploader_member = require("./utils/upload-multer")("members"); //members adressi.
+const uploader_members = require("./utils/upload-multer")("members"); //members adressi.
 // member argumenti asosida uploader objectini yasab beradi,
 
 /**********************************
@@ -20,7 +21,6 @@ router.post("/signup", memberController.signup);
 router.post("/login", memberController.login);
 router.get("/logout", memberController.logout);
 
-
 router.get(
   "/member/:id",
   memberController.retrieveAuthMember,
@@ -31,17 +31,16 @@ router.post(
   "/member-liken",
   memberController.retrieveAuthMember,
   memberController.likeMemberChosen
-); 
+);
 
 router.post(
   "/member/update",
   memberController.retrieveAuthMember,
-  uploader_member.single("mb_image"),
+  uploader_members.single("mb_image"),
   memberController.updateMember
 );
 
-
-                 // PRODUCT RELATED ROUTERS
+// PRODUCT RELATED ROUTERS
 router.post(
   "/products",
   memberController.retrieveAuthMember, // bizni kimligimizni aniqlaydi. va likelarni kim bosganini ham bildiradi.
@@ -58,7 +57,7 @@ router.get(
   productController.getChosenProduct
 );
 
-             // BOOKSHOP RELATED ROUTERS
+// BOOKSHOP RELATED ROUTERS
 router.get(
   "/books",
   memberController.retrieveAuthMember,
@@ -71,8 +70,26 @@ router.get(
   bookshopController.getChosenBookshop
 );
 
+          // ORDER RELATED ROUTERS: (faqat orderlarga dahldor);
+router.post(
+  "/orders/create",
+  memberController.retrieveAuthMember,
+  orderController.createOrder
+);
 
-// COMMUNITY RELATED ROUTERS START:
+router.get(
+  "/orders",
+  memberController.retrieveAuthMember,
+  orderController.getMyOrders
+);
+
+router.post(
+  "/orders/edit",
+  memberController.retrieveAuthMember,
+  orderController.editChosenOrder
+);
+
+             // COMMUNITY RELATED ROUTERS START:
 router.post(
   "/community/image",
   uploader_community.single("community_image"), //single mathod orqali imageni community_image nomi bn backendga yubordim.
@@ -123,8 +140,5 @@ router.get(
   memberController.retrieveAuthMember,
   followController.getMemberFollowers
 );
-
-
-
 
 module.exports = router;

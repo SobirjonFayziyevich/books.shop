@@ -76,7 +76,7 @@ memberController.checkMyAuthentication = (req, res) => {
   try {
     console.log("GET cont/checkMyAuthentication");
     let token = req.cookies["access_token"];
-    // console.log("token:::", token);
+    console.log("token:::", token);
 
     const member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
     assert.ok(member, Definer.auth_err2);
@@ -128,8 +128,8 @@ memberController.likeMemberChosen = async (req, res) => {
 memberController.updateMember = async (req, res) => {
   try {
     console.log("POST: cont/updateMember");
-    //   console.log(req.body);
-    //   console.log(req.file);
+      console.log(req.body);
+      console.log(req.file);
     assert.ok(req.member, Definer.auth_err3);
     const data = req.body;
     const member = new Member();
@@ -137,7 +137,7 @@ memberController.updateMember = async (req, res) => {
       req.member?._id,
       req.body,
       req.file
-    ); //updateMemberDtaega qanday qiymatlar kirishi kerak; req_memberni Idsi, rq.body va req.file;
+    ); 
     console.log("result;;;", result);
     res.json({ state: "success", data: result });
   } catch (err) {
@@ -150,11 +150,10 @@ memberController.retrieveAuthMember = (req, res, next) => {
   try {
     const token = req.cookies["access_token"];
     req.member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
-    //agar req.member ichida TOKEN mavjud bulsa,login bulga USER datalarini member ichiga quyib beradi. mavjud bulmasa null quyib beradi.
     next();
   } catch (err) {
-    console.log(`ERROR, cont/retrieveAuthMember, ${err.message}`); // hattoki, xato bulsa ham keyingi bosqichga utkazadi.
-    next(); // login bulgan va bulmaganlar kirb foydalanishi uchun.
+    console.log(`ERROR, cont/retrieveAuthMember, ${err.message}`); 
+    next(); 
   }
 };
 

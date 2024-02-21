@@ -119,7 +119,7 @@ bookshopController.loginProcess = async (req, res) => {
                 : res.redirect("/resto/products/menu");
         });
     } catch (err) {
-        console.log(`ERROR, cont/login, ${err.message}`)
+        console.log(`ERROR, cont/loginProcess, ${err.message}`)
         res.json({state: "fail", message: err.message});
     }
 };
@@ -143,6 +143,14 @@ bookshopController.validateAuthbookshop = (req, res, next) => {
     } else res.json({state: "fail", message: "only authenticated members with bookshop type"})
 };
 
+bookshopController.checkSessions = (req, res) => {
+    if (req.session?.member) {
+        res.json({state: 'success', data: req.session.member});
+    } else {
+        res.json({state: "fail", message: "You aren't authenticated"});
+    }
+};
+
 bookshopController.validateAdmin = (req, res, next) => { // faqat ADMIN user 
     if (req.session?.member?.mb_type === "ADMIN") {
         req.member = req.session.member;
@@ -156,13 +164,7 @@ bookshopController.validateAdmin = (req, res, next) => { // faqat ADMIN user
     }
 };
 
-bookshopController.checkSessions = (req, res) => {
-    if (req.session?.member) {
-        res.json({state: 'success', data: req.session.member});
-    } else {
-        res.json({state: "fail", message: "You aren't authenticated"});
-    }
-};
+
 
 bookshopController.getAllBookshop = async (req, res) => {
     try {

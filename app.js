@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     credentials: true,
-    origin: true,    // harqanday domendan kelayotgan requestni qabul qilsin.
+    origin: true,    
 })
 );
 app.use(cookieParser());
@@ -41,7 +41,7 @@ app.use(
     })
 );
 
-// har bir kelayotgan req un mantiq yozsak.
+
 app.use(function (req, res, next) {
     res.locals.member = req.session.member;
     next();
@@ -52,7 +52,7 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 // 4: Routing codes
-app.use("/resto", router_bssr); // for ADMIN and BOOkSHOP.
-app.use("/", router);           // 
+app.use("/resto", router_bssr); // for ADMIN and BOOkSHOP users.
+app.use("/", router);           // for Costumers.
 
 module.exports = app;

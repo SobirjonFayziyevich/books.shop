@@ -13,14 +13,13 @@
         <span>Sign up</span>
         <div>
           Back to Homepage |
-          <a style="color: #6440fb" href="/#">Home</a>
+          <a style="color: #6440fb" href="/resto">Home</a>
         </div>
         <p>
           Already registered? |
           <a style="color: #6440fb" href="/resto/login">Login</a>
         </p>
       </div>
-      
 
       <div class="sign-input_frame">
         <div class="sign_up_frame">
@@ -51,14 +50,14 @@
         <div class="sign_up_frame">
           <label>Password</label>
           <input
-                  type="password"
-                  name="mb_password"
-                  class="mb_password"
-                  placeholder="input password"
-                  value=""
-                  required
+            type="password"
+            name="mb_password"
+            class="mb_password"
+            placeholder="input password"
+            value=""
+            required
           />
-      </div>
+        </div>
         <div class="sign_up_frame">
           <label>mb address</label>
           <select class="mb_address" name="mb_address">
@@ -75,7 +74,7 @@
         <div class="media_frame">
           <img
             class="upload_img_frame"
-           src="/images/upload.jpg"
+            src="/images/upload.jpg"
             alt="default_book"
           />
           <div class="upload_container">
@@ -90,8 +89,8 @@
               <input
                 type="file"
                 id="input_file"
-                name="book_img"
-                class="upload-hidden form-control-file book_img"
+                name="shop_img"
+                class="upload-hidden form-control-file shop_img"
               />
             </div>
             <p class="thumbnail_desc">
@@ -132,25 +131,23 @@
       const mb_nick = $(".mb_nick").val();
       const mb_phone = $(".mb_phone").val();
       const mb_password = $(".mb_password").val();
-      const mb_address= $(".mb_address").val();
-      const book_img = $(".book_img").get(0).files[0] ?? null;
+      const mb_address = $(".mb_address").val();
+      const shop_img = $(".shop_img").get(0).files[0] ?? null;
       if (
-        mb_nick === ''
-        || mb_phone === ''
-        || mb_password === ''
-        || mb_address === ''
+        mb_nick === "" ||
+        mb_phone === "" ||
+        mb_password === "" ||
+        mb_address === ""
       ) {
         alert("iltimos hamma ma'lumotlarni kiriitng");
-            return false;
-        }
-        if (!book_img) {
-            alert("iltimos rasmni yuklang!");
-            return false;
-        }
-        return true;
+        return false;
+      }
+      if (!shop_img) {
+        alert("iltimos rasmni yuklang!");
+        return false;
+      }
+      return true;
     }
   </script>
 </body>
 <%-include('includes/footer')%>
-
-

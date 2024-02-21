@@ -1,12 +1,13 @@
 const MemberModel = require("../schema/member.model");
-const LikeModel = require ("../schema/like.model");
+const LikeModel = require("../schema/like.model");
 const Definer = require("../lib/error");
 const assert = require("assert");
 const bcrypt = require("bcrypt");
 const {
   shapeIntoMongooseObjectId,
-   lookup_auth_member_following, 
-   lookup_auth_member_liked } = require("../lib/config");
+  lookup_auth_member_following,
+  lookup_auth_member_liked,
+} = require("../lib/config");
 const View = require("./View");
 const Like = require("../../bookShop/models/Like");
 
@@ -20,8 +21,6 @@ class Member {
       const salt = await bcrypt.genSalt();
       input.mb_password = await bcrypt.hash(input.mb_password, salt);
       const new_member = new this.memberModel(input);
-      // schema modeldan  class sifatida foydalanib uni ichida datani berib, yangi object hosil qilib
-      //mongodb boshqacha formatdagi error beradi
       let result;
       try {
         result = await new_member.save();
@@ -34,7 +33,7 @@ class Member {
     } catch (err) {
       throw err;
     }
-  };
+  }
 
   async loginData(input) {
     try {

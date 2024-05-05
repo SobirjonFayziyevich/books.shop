@@ -38,18 +38,24 @@ productController.addNewProduct = async (req, res) => {
   try {
     console.log("POST: cont/addNewProduct");
     assert(req.files, Definer.general_err3);
+
     const product = new Product();
     let data = req.body;
-    console.log(req.files);
+
+    // console.log(req.files);
     data.product_images = req.files.map((ele) => {
       return ele.path;
     });
+    
+    console.log(data);
+
     const result = await product.addNewProductData(data, req.member);
-    assert.ok(result, Definer.product_err1);
+    // assert.ok(result, Definer.product_err1);
     const html = `<script>
                     alert("new product ${data.product_name} added successfully");
                     window.location.replace('/resto/products/menu');
                   </script>`;
+
     res.end(html);
   } catch (err) {
     console.log(`ERROR, cont/addNewProduct, ${err.message} `);

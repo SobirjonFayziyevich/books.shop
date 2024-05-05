@@ -44,8 +44,8 @@ class Member {
       assert.ok(member, Definer.auth_err3);
       // console.log(member);
       const isMatch = await bcrypt.compare(
-        input.mb_password,
-        member.mb_password
+        input.mb_password,  // inputdan qaytayotgan mb_password
+        member.mb_password   // databasedan qaytayotgan mb_password.
       );
       assert.ok(isMatch, Definer.auth_err4);
       return await this.memberModel.findOne({ mb_nick: input.mb_nick }).exec();

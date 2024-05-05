@@ -1,6 +1,5 @@
 const Product = require("../models/Product");
 const Member = require("../models/Member");
-const MemberModel = require("../schema/member.model");
 const Book = require("../models/Book")
 const Definer = require("../lib/error");
 const assert = require("assert");
@@ -50,12 +49,12 @@ bookshopController.getChosenBookshop = async (req, res) => {
     }
 };
 
-bookshopController.getMybookshopData = async (req, res) => {
+bookshopController.getMybookshopProducts = async (req, res) => {
     try {
         console.log("GET: cont/getMybookshopProducts");
         const product = new Product();
         const data = await product.getAllProductsDataResto(res.locals.member);
-        res.render("book-menu", {book_data: data});
+        res.render("book-menu", { book_data: data });
     } catch (err) {
         console.log(`ERROR: cont/getMybookshopProducts, ${err.message}`);
         res.redirect("/resto");
@@ -65,34 +64,37 @@ bookshopController.getMybookshopData = async (req, res) => {
 bookshopController.getSignupMyBookshop = async (req, res) => {
     try {
         console.log("GET: cont/getSignupMyBookshop");
-        res.render("signup");
+         res.render("signup");
     } catch (err) {
         console.log(`ERROR: cont/getSignupMyBookshop, ${err.message}`);
         res.json({state: "fail", message: err.message});
     }
 };
-
-
 bookshopController.signupProcess = async (req, res) => {
     try {
-        console.log("POST: cont/signupProcess");
-        assert(req.file, Definer.general_err3);
-        let new_member = req.body;
-        new_member.mb_type = "BOOKSHOP";
-        new_member.mb_image = req.file.path;
-
-        const member = new Member();
-        const result = await member.signupData(new_member);
-        assert(req.file, Definer.general_err1);
-        req.session.member = result;
-        req.session.save(function () {
-            res.redirect('/resto/products/menu');
-        })
+      console.log("POST: cont/signupProcess");
+      assert(req.file, Definer.general_err3);
+  
+      console.log("body:", req.body);
+      console.log("file:", req.file);
+      assert(req.file, Definer.general_err3);
+      res.send("success");
+  
+      let new_member = req.body;
+      new_member.mb_type = "BOOKSHOP"; // ADMINKA un kerak malumot.
+      new_member.mb_image = req.file.path; //yuklangan image ni  kiritayopmiz.
+  
+      const member = new Member(); //ichida request body yuborilyabdi.//
+      const result = await member.signupData(new_member);
+      assert(result, Definer.general_err1);
+  
+      req.session.member = result;
+      res.redirect("/resto/products/menu");
     } catch (err) {
-        console.log(`ERROR, cont/signupProcess, ${err.message}`);
-        res.json({state: 'fail', message: err.message});
+      console.log(`ERROR, cont/signupProcess, ${err.message}`);
+      res.json({ state: "fail", message: err.message });
     }
-};
+  };
 
 
 bookshopController.getLoginMyBookshop = async (req, res) => {

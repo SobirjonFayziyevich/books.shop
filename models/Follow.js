@@ -12,7 +12,7 @@ class Follow {
     this.followModel = FollowModel; // ProductModel classni hosil qilib (ProductModel)ga tenglashtirayopti.
     this.memberModel = MemberModel;
   }
-  async subscribeData(member, data) {
+  async  subscribeData(member, data) {
     try {
       console.log("***************:::", data);
       assert.ok(member._id !== data.mb_id, Definer.follow_err1);
@@ -42,7 +42,7 @@ class Follow {
     try {
       const new_follow = new this.followModel({
         follow_id: follow_id,
-        subscriber_id: subscriber_id,
+        subscriber_id: subscriber_id
       });
 
       return await new_follow.save(); // new_folowni save mathodi promise tashlaydi uni kutib turish lozim.
@@ -93,12 +93,12 @@ class Follow {
     }
   }
 
-  async getMemberFollowingsData(inquiry) {
+  async getMemberFollowingsData(inquery) {
     try {
-      //  console.log("query:", inquiry);
-      const subscriber_id = shapeIntoMongooseObjectId(inquiry.mb_id),
-        page = inquiry.page * 1,
-        limit = inquiry.limit * 1;
+      //  console.log("query:", inquery);
+      const subscriber_id = shapeIntoMongooseObjectId(inquery.mb_id),
+        page = inquery.page * 1,
+        limit = inquery.limit * 1;
 
       const result = await this.followModel
         .aggregate([
@@ -125,11 +125,11 @@ class Follow {
     }
   }
 
-  async getMemberFollowersData(member, inquiry) {
+  async   getMemberFollowersData(member, inquery) {
     try {
-      const follow_id = shapeIntoMongooseObjectId(inquiry.mb_id), //following qilgan odamlarni topmoqchimiz.
-        page = inquiry.page * 1,
-        limit = inquiry.limit * 1;
+      const follow_id = shapeIntoMongooseObjectId(inquery.mb_id), //following qilgan odamlarni topmoqchimiz.
+        page = inquery.page * 1,
+        limit = inquery.limit * 1;
 
       let aggregateQuery = [
         { $match: { follow_id: follow_id } },
@@ -145,9 +145,9 @@ class Follow {
           },
         },
 
-        { $unwind: "$subscriber_member_data" },
+        { $unwind: "$subscriber_member_data" }, //unwind usulida yuqoridagi subscriberlarni arraydan chiarib olish usuli. 
       ];
-      if (member && member._id === inquiry.mb_id) {
+      if (member && member._id === inquery.mb_id) {
         aggregateQuery.push(lookup_auth_member_following(follow_id, "follows"));
         // lookup_auth_member_followingni aggregateQueryga push qilayopmiz.
       }
@@ -159,5 +159,5 @@ class Follow {
       throw err;
     }
   }
-}
+} 
 module.exports = Follow;

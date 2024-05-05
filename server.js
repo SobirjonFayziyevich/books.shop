@@ -3,6 +3,7 @@ dotenv.config();
 
 const http = require("http");
 const mongoose = require("mongoose").default;
+
 const connectionString = process.env.MONGO_URL;
 mongoose.set("strictQuery", false);
 
@@ -18,6 +19,7 @@ mongoose.connect(
     if (err) console.log("Error on connection MongoDB");
     else {
       console.log("MongoDB connection succeed");
+      // console.log(goose);  call mongoose.
 
       const app = require("./app");
       const server = http.createServer(app);

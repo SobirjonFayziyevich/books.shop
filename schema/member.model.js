@@ -16,7 +16,7 @@ const memberSchema = new mongoose.Schema({
     },
     mb_phone: {
         type: String,
-        required: true,
+        required: true, // bulishi shart degani.
         index: {unique: true, sparse: true}   
         
     },

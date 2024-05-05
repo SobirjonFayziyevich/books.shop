@@ -35,7 +35,7 @@ memberController.login = async (req, res) => {
       result = await member.loginData(data); //ichida request body yuborilyabdi
 
       const token = memberController.createToken(result);
-      console.log("token:::", tolen);
+      // console.log("token:::", token);
       res.cookie("access_token", token, {
         maxAge: 6 * 3600 * 1000,
         httpOnly: false,

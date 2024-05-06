@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const {
   product_collection_enums,
   product_status_enums,
@@ -14,7 +15,7 @@ const productSchema = new mongoose.Schema(
     product_collection: {
       type: String,
       required: true,
-      default: "triller",
+      default: "thriller",
       enum: {
         values: product_collection_enums,
         message: "{VALUES} is not among permitted values",
@@ -23,7 +24,7 @@ const productSchema = new mongoose.Schema(
     product_status: {
       type: String,
       required: false,
-      default: "PAUSED",
+      default: "ACTIVE",
       enum: {
         values: product_status_enums,
         message: "{VALUES} is not among permitted values",
@@ -44,23 +45,24 @@ const productSchema = new mongoose.Schema(
     },
     product_size: {
       type: String,
+      default: "normal",
       required: function () {
         const sized_list = ["book"];
         return sized_list.includes(this.product_collection);
       },
-      default: "normal",
       enum: {
         values: product_size_enums,
         message: "{VALUES} is not among permitted values",
       },
     },
+
     product_description: {
       type: String,
-      required: false,
+      required: true,
     },
     product_images: {
       type: Array,
-      required: true,
+      required: false,
       default: [],
     },
     product_views: {

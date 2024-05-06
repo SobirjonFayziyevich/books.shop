@@ -142,14 +142,21 @@ bookshopController.validateAuthbookshop = (req, res, next) => {
     if (req.session?.member?.mb_type === "BOOKSHOP") {
         req.member = req.session.member;
         next();
-    } else res.json({state: "fail", message: "only authenticated members with bookshop type"})
+    } else 
+    res.json({
+        state: "fail",
+         message: "only authenticated members with bookshop type",
+        });
 };
 
 bookshopController.checkSessions = (req, res) => {
     if (req.session?.member) {
         res.json({state: 'success', data: req.session.member});
     } else {
-        res.json({state: "fail", message: "You aren't authenticated"});
+        res.json({
+            state: "fail", 
+            message: "You aren't authenticated",
+        });
     }
 };
 

@@ -3,8 +3,7 @@
 <link rel="stylesheet" type="text/css" href="/css/home.css" />
 <style>
   body {
-    background-color: #2c261e;
-    background-image: url(https://images.ctfassets.net/o78em1y1w4i4/LHN0F94cNFCx1drEcfcsY/984e632abf38018f2a6ab22c4b61fdc6/teaser-book-with-heart-pages.jpg?fm=webp&w=1160&q=75);
+    background-color: #fff;
     font-size: 2rem;
   }
 </style>
@@ -48,12 +47,97 @@
   </div>
   <!-- HOME PAGE ANIMATION SECTION START -->
 <div>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-75 0 250 82.5" width="500" height="165">
+    <defs>
+      <path id="path-foreground" d="M 0 65 a 200 200 0 0 1 150 -65 160 160 0 0 0 -125 65" />
+      <path id="path-background" d="M 60 65 l -60 -45 h 22.5 l 60 45 z" />
   
+      <!-- mask for the logo -->
+      <mask id="mask-path">
+        <rect width="150" height="100" fill="hsl(0, 0%, 100%)" />
+        <g fill="hsl(0, 0%, 0%)">
+          <use transform="translate(-3.5 -3.5)" href="#path-foreground" />
+          <use transform="translate(3 3)" href="#path-foreground" />
+        </g>
+      </mask>
+  
+      <!-- mask(s) purely for the animation -->
+      <mask id="mask-path-foreground">
+        <rect width="150" height="100" fill="hsl(0, 0%, 100%)" />
+        <g fill="hsl(0, 0%, 0%)">
+          <g transform="translate(150 0)">
+            <circle transform="scale(0)" r="175" />
+          </g>
+        </g>
+      </mask>
+  
+      <mask id="mask-path-background">
+        <rect width="150" height="100" fill="hsl(0, 0%, 100%)" />
+        <g fill="hsl(0, 0%, 0%)">
+          <circle transform="scale(0)" r="125" />
+        </g>
+      </mask>
+    </defs>
+  
+    <g fill="currentColor" stroke="none">
+      <g mask="url(#mask-path-background)">
+        <g mask="url(#mask-path)">
+          <use href="#path-background" />
+        </g>
+      </g>
+      <g mask="url(#mask-path-foreground)">
+        <use href="#path-foreground" />
+      </g>
+      <g transform="translate(0 82.5)">
+        <text textLength="82.5" style="text-transform: uppercase; font-size: 0.8rem;">
+          starlink
+        </text>
+      </g>
+    </g>
+  </svg>
 </div>
 
    <!--HOME PAGE ANIMATION SCRIPT START--> 
   <script >
-   
+   /*
+after checking the for prefers-reduced-motion media query
+
+hide **and then** show the SVG elements behind the logo
+*/
+const { matches } = window.matchMedia("prefers-reduced-motion: reduce");
+
+if (!matches) {
+	const text = document.querySelector("svg text");
+	// it seems it is necessary to reiterate the textLength attribute of the parent text
+	const textLength = text.getAttribute("textLength");
+	text.innerHTML = text.textContent
+		.split("")
+		.map((letter) => `<tspan textLength="${textLength}">${letter}</tspan>`)
+		.join("");
+
+	const animation = anime.timeline();
+
+	animation.add({
+		targets: "text tspan",
+		opacity: [0, 1],
+		duration: 425,
+		easing: "easeInOutQuad",
+		delay: (d, i) => 150 * i + 500
+	});
+
+	animation.add(
+		{
+			targets: "mask circle",
+			scale: [1, 0],
+			duration: 2000,
+			easing: "easeInOutSine"
+		},
+		500
+	);
+
+	window.addEventListener("click", () => animation.restart());
+}
+
   </script>
 </body>
 

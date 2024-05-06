@@ -13,10 +13,11 @@ const uploader_members = require("./utils/upload-multer")("members");
 
 router_bssr.get("/", bookshopController.home);
  
-  router_bssr.get("/sign-up", bookshopController.getSignupMyBookshop);
-  router_bssr.post(
+  router_bssr
+  .get("/sign-up", bookshopController.getSignupMyBookshop)
+  .post(
     "/sign-up",
-    uploader_members.single("book_image"),
+    uploader_members.single("book_img"),
   bookshopController.signupProcess
   );     
 
@@ -28,10 +29,11 @@ router_bssr.get("/logout", bookshopController.logout);
 router_bssr.get("/check-me", bookshopController.checkSessions);
 
 router_bssr.get("/products/menu", bookshopController.getMybookshopProducts);
+
 router_bssr.post(
   "/products/create",
   bookshopController.validateAuthbookshop,
-  uploader_product.array("book_images", 5),
+  uploader_product.array("book_images", 3),
   productController.addNewProduct
 );
 router_bssr.post(

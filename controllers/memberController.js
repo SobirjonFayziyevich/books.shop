@@ -76,7 +76,7 @@ memberController.checkMyAuthentication = (req, res) => {
   try {
     console.log("GET cont/checkMyAuthentication");
     let token = req.cookies["access_token"];
-    console.log("token:::", token);
+    // console.log("token:::", token);
 
     const member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
     assert.ok(member, Definer.auth_err2);
@@ -92,11 +92,11 @@ memberController.getChosenMember = async (req, res) => {
     console.log("GET cont/getChosenMember");
     const id = req.params.id;
 
-    const member = new Member(); //Service modeldan object olayopmiz.
-    const result = await member.getChosenMemberData(req.member, id); //1chi argument(req.member) kimbu req 1chi amalga oshirayopti,
-    // 2chi argument (id) bu kimni datasini kurmoqchimiz.
+    const member = new Member(); 
+    const result = await member.getChosenMemberData(req.member, id); 
+    
 
-    res.json({ state: "success", data: result });
+    res.json({ state: "succedd", data: result });
   } catch (err) {
     console.log(`ERROR, cont/getChosenMember, ${err.message}`);
     res.json({ state: "fail", message: err.message });

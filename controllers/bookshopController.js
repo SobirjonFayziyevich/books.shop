@@ -57,6 +57,7 @@ bookshopController.getMybookshopProducts = async (req, res) => {
         res.render("book-menu", { book_data: data });
     } catch (err) {
         console.log(`ERROR: cont/getMybookshopProducts, ${err.message}`);
+        res.json({ state: "fail", message: err.message });
         res.redirect("/resto");
     }
 }
@@ -74,11 +75,7 @@ bookshopController.signupProcess = async (req, res) => {
     try {
       console.log("POST: cont/signupProcess");
       assert(req.file, Definer.general_err3);
-  
-      console.log("body:", req.body);
-      console.log("file:", req.file);
-      assert(req.file, Definer.general_err3);
-      res.send("success");
+
   
       let new_member = req.body;
       new_member.mb_type = "BOOKSHOP"; // ADMINKA un kerak malumot.
@@ -154,9 +151,7 @@ bookshopController.checkSessions = (req, res) => {
         res.json({state: 'success', data: req.session.member});
     } else {
         res.json({
-            state: "fail", 
-            message: "You aren't authenticated",
-        });
+            state: "fail", message: "You aren't authenticated" });
     }
 };
 

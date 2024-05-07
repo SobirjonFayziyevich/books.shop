@@ -11,6 +11,7 @@ const {
 const View = require("./View");
 const Like = require("../../bookShop/models/Like");
 
+
 class Member {
   constructor() {
     this.memberModel = MemberModel; // service model ichida schema model =dan foydalinyabdi
@@ -42,7 +43,7 @@ class Member {
         .exec();
 
       assert.ok(member, Definer.auth_err3);
-      // console.log(member);
+      console.log(member);
       const isMatch = await bcrypt.compare(
         input.mb_password,  // inputdan qaytayotgan mb_password
         member.mb_password   // databasedan qaytayotgan mb_password.
@@ -67,7 +68,9 @@ class Member {
       if (member) {
         await this.viewChosenItemByMember(member, id, "member");
         aggregateQuery.push(lookup_auth_member_liked(auth_mb_id));
+
         //TODO: check auth member  likes the chosen member.
+
         aggregateQuery.push(
           lookup_auth_member_following(auth_mb_id, "members")
         );
@@ -97,7 +100,7 @@ class Member {
       const doesExist = await view.checkViewExistence(view_ref_id);
       console.log("doesExist:::", doesExist);
 
-      if (!doesExist) {
+      if (!doesExist) { //faqat bir marta view bulish teoremasi.
         const result = await view.insertMemberView(view_ref_id, group_type);
         assert.ok(result, Definer.general_err1);
       }

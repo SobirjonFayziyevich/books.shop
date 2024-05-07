@@ -2,7 +2,7 @@ const express = require("express");
 const router_bssr = express.Router(); // expressni ichidan router olib chiqilyabdi
 const bookshopController = require("./controllers/bookshopController");
 const productController = require("./controllers/productController");
-const uploader_product = require("./utils/upload-multer")("products");
+const uploader_product = require("./utils/upload-multer")("product");
 const uploader_members = require("./utils/upload-multer")("members");
 
 /**********************************
@@ -33,7 +33,7 @@ router_bssr.get("/products/menu", bookshopController.getMybookshopProducts);
 router_bssr.post(
   "/products/create",
   bookshopController.validateAuthbookshop,
-  uploader_product.array("book_images", 3),
+  uploader_product.array("product_images", 3),
   productController.addNewProduct
 );
 router_bssr.post(

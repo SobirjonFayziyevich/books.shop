@@ -65,7 +65,7 @@ class Member {
         { $unset: "mb_password" },
       ];
 
-      if (member) {
+      if (member) { // qachonkkiy login bulsa manashu yerdan qayta jarayon boshlanadi.
         await this.viewChosenItemByMember(member, id, "member");
         aggregateQuery.push(lookup_auth_member_liked(auth_mb_id));
 
@@ -97,7 +97,7 @@ class Member {
 
       assert.ok(isValid, Definer.general_err2);
 
-      const doesExist = await view.checkViewExistence(view_ref_id);
+      const doesExist = await view.checkViewExistence(view_ref_id); // view mavjudmi?
       console.log("doesExist:::", doesExist);
 
       if (!doesExist) { //faqat bir marta view bulish teoremasi.

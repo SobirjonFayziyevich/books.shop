@@ -69,32 +69,31 @@
 
     $(function () {
 
-        $(".mb_top").on("change", function (e) {  // (E) bu event .
-            // alert('amalga oshirdim');
-            const id = e.target.id;   //event bydefault kirib keladi va kerak bulgan bookshopni (id) beradi.
-            const mb_top = e.target.checked ? 'Y' : 'N';  //mb_top_status checked bul,yes bulmasa No kurinishida bul.
+        $(".mb_top").on("change", function (e) {  
+            const id = e.target.id;   
+            const mb_top = e.target.checked ? 'Y' : 'N';  
 
             axios.post('/resto/all-book/edit',{id: id, mb_top: mb_top})
                 .then(response => {
-                const result = response.data;               // buni ichiga state: "success", data: result qiymati beriladi.
+                const result = response.data;               
                     if(result.state === 'success') alert('successfully update');
-                    else alert(result.message);            //agar fail bul, result ichida messageni kursatsin.
+                    else alert(result.message);            
                 })
                 .catch(err => console.log(err));
         });
 
-        $(".mb_status").on("change", function (e) {  // (E) bu event .
-            // alert('amalga oshirdim');
-            const id = e.target.id;   //event bydefault kirib keladi va kerak bulgan resta (id) beradi.
-            const mb_status = $(`#${id}.mb_status`).val();  //mb_top_status checked bul,yes bulmasa No kurinishida bul.
+        $(".mb_status").on("change", function (e) {  
+           
+            const id = e.target.id;   
+            const mb_status = $(`#${id}.mb_status`).val();  
 
             console.log("mb_status:", mb_status);
 
             axios.post('/resto/all-book/edit',{id: id, mb_status: mb_status})
                 .then(response => {
-                    const result = response.data;               // buni ichiga state: "success", data: result qiymati beriladi.
+                    const result = response.data;               
                     if(result.state === 'success') alert('successfully update');
-                    else alert(result.message);            //agar fail bul, result ichida messageni kursatsin.
+                    else alert(result.message);           
                 })
                 .catch(err => console.log(err));
         });

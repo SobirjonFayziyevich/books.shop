@@ -37,6 +37,11 @@ productController.getChosenProduct = async (req, res) => {
 productController.addNewProduct = async (req, res) => {
   try {
     console.log("POST: cont/addNewProduct");
+    console.log(req.member);
+    res.json({ test: "ok" });
+
+    // TODO product creation develop.
+
     assert(req.files, Definer.general_err3);
 
     const product = new Product();
@@ -49,8 +54,8 @@ productController.addNewProduct = async (req, res) => {
     console.log(data);
 
     const result = await product.addNewProductData(data, req.member);
-    // assert.ok(result, Definer.product_err1);
-    // res.send("ok");
+    assert.ok(result, Definer.product_err1);
+    res.send("ok");
 
     const html = `<script>
                     alert("new product ${data.product_name} added successfully");

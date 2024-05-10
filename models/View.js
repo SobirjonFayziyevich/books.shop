@@ -112,7 +112,7 @@ class View {
     }
   }
 
-  async checkViewExistence(view_ref_id) {
+  async checkViewExistence(view_ref_id) { // viewni tekshirish.
     try {
       console.log("checkView is working!1");
       const view = await this.viewModel

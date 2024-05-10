@@ -8,9 +8,9 @@ const { getAllProducts } = require("./controllers/productController");
 const communityController = require("./controllers/communityController");
 const orderController = require("./controllers/orderController");
 const bookshopController = require("./controllers/bookshopController");
-const uploader_community = require("./utils/upload-multer")("community"); //community adressi.
-const uploader_members = require("./utils/upload-multer")("members"); //members adressi.
-// member argumenti asosida uploader objectini yasab beradi,
+// const uploader_community = require("./utils/upload-multer")("community"); //community adressi.
+// const uploader_members = require("./utils/upload-multer")("members"); //members adressi.
+
 
 /**********************************
  *         REST  API             *
@@ -36,7 +36,7 @@ router.post(
 router.post(
   "/member/update",
   memberController.retrieveAuthMember,
-  uploader_members.single("mb_image"),
+  // uploader_members.single("mb_image"),
   memberController.updateMember
 );
 
@@ -92,7 +92,7 @@ router.post(
              // COMMUNITY RELATED ROUTERS START:
 router.post(
   "/community/image",
-  uploader_community.single("community_image"), //single mathod orqali imageni community_image nomi bn backendga yubordim.
+  // uploader_community.single("community_image"), //single mathod orqali imageni community_image nomi bn backendga yubordim.
   communityController.imageInsertion
 ); //keyingi mantiqim communityControllerni hosil qilib unga,maxsus imageInsertion degan mathodni yozib oldim.
 

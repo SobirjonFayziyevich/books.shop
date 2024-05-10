@@ -138,7 +138,7 @@ memberController.updateMember = async (req, res) => {
       req.body,
       req.file
     ); 
-    console.log("result;;;", result);
+    console.log("result:::", result);
     res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR, cont/updateMember, ${err.message}`);

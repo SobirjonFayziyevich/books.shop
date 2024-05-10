@@ -3,7 +3,7 @@ const router_bssr = express.Router(); // expressni ichidan router olib chiqilyab
 const bookshopController = require("./controllers/bookshopController");
 const productController = require("./controllers/productController");
 const uploader_product = require("./utils/upload-multer")("products");
-// const uploader_members = require("./utils/upload-multer")("members");
+const uploader_members = require("./utils/upload-multer")("members");
 // const { uploadProductImage } = require("./utils/upload-multer");
 /**********************************
  *         BSSR  EJS             *
@@ -17,7 +17,7 @@ router_bssr.get("/", bookshopController.home);
   .get("/sign-up", bookshopController.getSignupMyBookshop)
   .post(
     "/sign-up",
-    // uploader_members.single("book_img"),
+    uploader_members.single("book_img"),
   bookshopController.signupProcess
   );     
 

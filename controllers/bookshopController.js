@@ -78,10 +78,10 @@ bookshopController.signupProcess = async (req, res) => {
 
   
       let new_member = req.body;
-      new_member.mb_type = "BOOKSHOP"; // ADMINKA un kerak malumot.
-      new_member.mb_image = req.file.path; //yuklangan image ni  kiritayopmiz.
+      new_member.mb_type = "BOOKSHOP"; 
+      new_member.mb_image = req.file.path; 
   
-      const member = new Member(); //ichida request body yuborilyabdi.//
+      const member = new Member(); 
       const result = await member.signupData(new_member);
       assert(result, Definer.general_err1);
   

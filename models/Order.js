@@ -15,7 +15,7 @@ class Order {
       let order_total_amount = 0,
         delivery_cost = 0;
       const mb_id = shapeIntoMongooseObjectId(member._id);
-      data.map((item) => {
+      data.map(item => {
         order_total_amount += item["quantity"] * item["price"];
       });
 

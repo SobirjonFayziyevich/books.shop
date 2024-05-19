@@ -15,9 +15,9 @@ const orderSchema = new mongoose.Schema(
             message: "{VALUE} is not among permitted values",
         },
     },
-    mb_id: {type: Schema.Types.ObjectId, ref: "Member", required: false }, //schema objectini ichida types mavjud, typesni ichidan ObjectIdni olamiz,
+    mb_id: {type: Schema.Types.ObjectId, ref: "Member", required: false }, 
   },
-{ timestamps: true } //createdAT va updatedAt ni qabul qilayotgani un true bulayopti.
+{ timestamps: true } 
 
 );
 

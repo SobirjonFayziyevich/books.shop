@@ -35,7 +35,7 @@ bookshopController.getChosenBookshop = async (req, res) => {
 }
 
 /**********************************
- *    Company related methods   *
+ *    Bookshop related methods   *
  **********************************/
 
 

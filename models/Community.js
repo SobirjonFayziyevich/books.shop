@@ -19,20 +19,19 @@ class Community {
     try {
       data.mb_id = shapeIntoMongooseObjectId(member._id); 
       const new_article = await this.saveArticleData(data); 
-      console.log("new_article:::", new_article );
+      // console.log("new_article:::", new_article );
       return new_article;
     } catch (err) {
       throw err;
     }
   }
-
+  
   async saveArticleData(data) {
-    
-    try {
-      const article = new this.boArticleModel(data); 
-      return await article.save(); 
+    try{
+     const article = new this.boArticleModel(data);
+     return await article.save();
     } catch (mongo_err) {
-      console.log(mongo_err); 
+      console.log(mongo_err);
       throw new Error(Definer.mongo_validation_err1);
     }
   }

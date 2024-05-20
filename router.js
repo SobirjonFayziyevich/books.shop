@@ -8,8 +8,8 @@ const { getAllProducts } = require("./controllers/productController");
 const communityController = require("./controllers/communityController");
 const orderController = require("./controllers/orderController");
 const bookshopController = require("./controllers/bookshopController");
-// const uploader_community = require("./utils/upload-multer")("community"); //community adressi.
-// const uploader_members = require("./utils/upload-multer")("members"); //members adressi.
+const uploader_community = require("./utils/upload-multer")("community"); //community adressi.
+const uploader_member = require("./utils/upload-multer")("members"); //members adressi.
 
 
 /**********************************
@@ -36,7 +36,7 @@ router.post(
 router.post(
   "/member/update",
   memberController.retrieveAuthMember,
-  // uploader_members.single("mb_image"),
+   uploader_member.single("mb_image"),
   memberController.updateMember
 );
 
@@ -91,11 +91,13 @@ router.post(
 );
 
              // COMMUNITY RELATED ROUTERS START:
+
+
 router.post(
   "/community/image",
-  // uploader_community.single("community_image"), //single mathod orqali imageni community_image nomi bn backendga yubordim.
+   uploader_community.single("community_image"), //single mathod orqali imageni community_image nomi bn backendga yubordim.
   communityController.imageInsertion
-); //keyingi mantiqim communityControllerni hosil qilib unga,maxsus imageInsertion degan mathodni yozib oldim.
+); 
 
 router.post(
   "/community/create",
@@ -111,17 +113,18 @@ router.get(
 
 router.get(
   "/community/target",
-  memberController.retrieveAuthMember, // buyerda harqanday atriclega like bosganmizmi, yuqmi shuni topish un uzimizni retrive qilishimz kerak.
+  memberController.retrieveAuthMember, 
   communityController.getArticles
 );
 
 router.get(
   "/community/single-article/:art_id",
-  memberController.retrieveAuthMember, // buyerda harqanday atriclega like bosganmizmi, yuqmi shuni topish un uzimizni retrive qilishimz kerak.
+  memberController.retrieveAuthMember, 
   communityController.getChosenArticle
 );
 
-//  Following related router;
+//   FOLLOW REALETED ROUTERS
+
 router.post(
   "/follow/subscribe",
   memberController.retrieveAuthMember,

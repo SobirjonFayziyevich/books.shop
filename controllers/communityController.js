@@ -1,15 +1,15 @@
-let communityController = module.exports; // comCont export qilib oldim
+let communityController = module.exports; 
 const assert = require("assert");
 const Definer = require("../lib/error");
 const Community = require("../models/Community");
 
-communityController.imageInsertion = async (req, res) => {   //comContga imageInsertion mathodini hosil qilib oldim.
+communityController.imageInsertion = async (req, res) => {   
     try {
         console.log("POST cont/imageInsertion");
-        assert.ok(req.file, Definer.general_err3);  //requestni ichida fayl bormi yuqmi? 
-        const image_url = req.file.path;            //image URLni req file ichidagi (path)degan element orqali olib,
+        assert.ok(req.file, Definer.general_err3);  
+        const image_url = req.file.path;            
 
-        res.json({ state: "success", data: image_url });  // json bn orqaga qaytarish un state-success, datasi-image_url bulsin.
+        res.json({ state: "success", data: image_url });  
 
 
     } catch(err) {
@@ -21,13 +21,13 @@ communityController.imageInsertion = async (req, res) => {   //comContga imageIn
 
 communityController.createArticle = async (req, res) => {
      try {
-        console.log("POST cont/createArticle");  //faqatgina Login bulgan usergina post bula oladi.
+        console.log("POST cont/createArticle");  
         
-        const community = new Community(); // Community Service Model community objectini hosil qilib oldim.
-        const result = await community.createArticleData(req.member, req.body); //req.member login bulgan userning kredinshili.
+        const community = new Community(); 
+        const result = await community.createArticleData(req.member, req.body); 
         assert.ok(result, Definer.general_err1);
 
-        res.json({ state: "success", data: result });  // json bn orqaga qaytarish un state-success, datasi-image_url bulsin.
+        res.json({ state: "success", data: result });  
 
      } catch(err) {
         console.log(`ERROR, cont/createArticle, ${err.message}`);
@@ -52,7 +52,7 @@ communityController.getMemberArticles = async (req, res) => {
           ); 
 
     
-          res.json({ state: "success", data: result });  // json bn orqaga qaytarish 
+          res.json({ state: "success", data: result });  
 
     } catch(err) {
         console.log(`ERROR, cont/getMemberArticles, ${err.message}`);

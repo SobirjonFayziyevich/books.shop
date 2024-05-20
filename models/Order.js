@@ -82,7 +82,7 @@ class Order {
       const result = await order_item.save();
       assert.ok(result, Definer.order_err2);
 
-      return "inserted";
+      return "created";
     } catch (err) {
       console.log(err);
       throw new Error(Definer.order_err2);

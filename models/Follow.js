@@ -69,6 +69,7 @@ class Follow {
           ) // mb_subscriber_cnt ni modifier soniga oshir.
           .exec();
       }
+      return true;
     } catch (err) {
       throw err;
     }

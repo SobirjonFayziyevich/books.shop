@@ -5,17 +5,17 @@ const {} = require("../lib/config");
 
 const followSchema = new mongoose.Schema(
     {
-       follow_id: {type: Schema.Types.ObjectId, required: true}, //subscribe qilayotgan odam, kimga follow qilgan
-       subscriber_id: {type: Schema.Types.ObjectId, required: true},  // buyerga bizning id yoziladi.
+       follow_id: {type: Schema.Types.ObjectId, required: true}, 
+       subscriber_id: {type: Schema.Types.ObjectId, required: true},  
   },
-{ timestamps: true } //createdAT va updatedAt ni qabul qilayotgani un true bulayopti.
+{ timestamps: true } 
 
 );
 
-followSchema.index( // compaund indexsitionni hosil qiladim.yani: databasega unic indexni kiritish.
-    // bir vaqtni uzida follow_id va subscriber_id
-    {follow_id: 1, subscriber_id: 1},
-    {unique: true} // follow_id bn subscribe_id dan tashkil topgan birikma uniqe bulishi kerak.
+followSchema.index(
+    
+    {follow_id: 1, subscriber_id: 1}, //follow_id va subcribe_id dan tashkil topgan birikma unique bulishi lozim.
+    {unique: true}
 );
 
 module.exports = mongoose.model("Follow", followSchema); 

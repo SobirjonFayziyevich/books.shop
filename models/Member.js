@@ -49,7 +49,10 @@ class Member {
         member.mb_password   // databasedan qaytayotgan mb_password.
       );
       assert.ok(isMatch, Definer.auth_err4);
-      return await this.memberModel.findOne({ mb_nick: input.mb_nick }).exec();
+
+      return await this.memberModel
+      .findOne({ mb_nick: input.mb_nick })
+      .exec();
     } catch (err) {
       throw err;
     }

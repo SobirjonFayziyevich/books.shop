@@ -94,12 +94,12 @@ class Follow {
     }
   }
 
-  async getMemberFollowingsData(inquery) {
+  async getMemberFollowingsData(inquiry) {
     try {
       //  console.log("query:", inquery);
-      const subscriber_id = shapeIntoMongooseObjectId(inquery.mb_id),
-        page = inquery.page * 1,
-        limit = inquery.limit * 1;
+      const subscriber_id = shapeIntoMongooseObjectId(inquiry.mb_id),
+        page = inquiry.page * 1,
+        limit = inquiry.limit * 1;
 
       const result = await this.followModel
         .aggregate([
@@ -126,11 +126,11 @@ class Follow {
     }
   }
 
-  async   getMemberFollowersData(member, inquery) {
+  async   getMemberFollowersData(member, inquiry) {
     try {
-      const follow_id = shapeIntoMongooseObjectId(inquery.mb_id), //following qilgan odamlarni topmoqchimiz.
-        page = inquery.page * 1,
-        limit = inquery.limit * 1;
+      const follow_id = shapeIntoMongooseObjectId(inquiry.mb_id), //following qilgan odamlarni topmoqchimiz.
+        page = inquiry.page * 1,
+        limit = inquiry.limit * 1;
 
       let aggregateQuery = [
         { $match: { follow_id: follow_id } },
@@ -146,9 +146,9 @@ class Follow {
           },
         },
 
-        { $unwind: "$subscriber_member_data" }, //unwind usulida yuqoridagi subscriberlarni arraydan chiarib olish usuli. 
+        { $unwind: "$subscriber_member_data" }, //unwind usulida yuqoridagi subscriberlarni arraydan objectga aylantirib olish usuli. 
       ];
-      if (member && member._id === inquery.mb_id) {
+      if (member && member._id === inquiry.mb_id) {
         aggregateQuery.push(lookup_auth_member_following(follow_id, "follows"));
         // lookup_auth_member_followingni aggregateQueryga push qilayopmiz.
       }

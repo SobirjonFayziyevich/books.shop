@@ -153,6 +153,7 @@ class Member {
         mb_description: data.mb_description,
         mb_image: image ? image.path : null,
       };
+
       for (let prop in params) if (!params[prop]) delete params[prop];
       const result = await this.memberModel
         .findOneAndUpdate({ _id: mb_id }, params, {

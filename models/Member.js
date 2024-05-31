@@ -9,7 +9,7 @@ const {
   lookup_auth_member_liked,
 } = require("../lib/config");
 const View = require("./View");
-const Like = require("../../bookShop/models/Like");
+const Like = require("./Like");
 
 
 class Member {
@@ -115,7 +115,7 @@ class Member {
 
   async likeChosenItemByMember(member, like_ref_id, group_type) {
     try {
-      console.log(" likeChosenItemByMember is working!!!!");
+      // console.log(" likeChosenItemByMember is working!!!!");
       like_ref_id = shapeIntoMongooseObjectId(like_ref_id);
       const mb_id = shapeIntoMongooseObjectId(member._id);
 
@@ -131,7 +131,7 @@ class Member {
         : await like.insertMemberLike(like_ref_id, group_type); // agar mavjud bulmasa:
       assert.ok(data, Definer.general_err1);
 
-      const result = {
+      const result = { // qaysi objectni qaytarmoqchimiz shuni yozaiz.
         like_group: data.like_group,
         like_ref_id: data.like_ref_id,
         like_status: doesExist ? 0 : 1,

@@ -4,8 +4,9 @@ const express = require("express");
 const app = express();
 const router = require("./router");
 const router_bssr = require("./router_bssr");
+const cors = require('cors');
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
+
 
 let session = require("express-session"); // call express sessionni
 const MongoDBStore = require("connect-mongodb-session")(session);
@@ -17,14 +18,13 @@ const store = new MongoDBStore({
 // 1: Entery codes
 app.use(express.static("public"));
 app.use("/uploads", express.static(__dirname + "/uploads"));
-app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    credentials: true,
-    origin: true,
-  })
+     credentials: true,
+     origin: true,
+})
 );
 app.use(cookieParser());
 

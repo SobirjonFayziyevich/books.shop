@@ -12,7 +12,7 @@ bookshopController.getBookshop = async (req, res) => {
         const data = req.query;
         const book = new Book();
 
-        result = await book.getBookshopData(req.member, data);
+        const result = await book.getBookshopData(req.member, data);
         res.json({state: "success", data: result});
     } catch (err) {
         console.log(`ERROR, cont/getBookshop, ${err.message}`);

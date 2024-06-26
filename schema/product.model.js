@@ -90,7 +90,6 @@ productSchema.index( // bir xil qiymatli nahsulotni qushmasin ADD holatida.
     book_mb_id: 1,
     product_name: 1,
     product_size: 1,
-    product_volume: 1,
   },
   { unique: true }
 );

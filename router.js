@@ -41,9 +41,9 @@ router.post(
 // PRODUCT RELATED ROUTERS
 router.post(
   "/products",
-  memberController.retrieveAuthMember, // bizni kimligimizni aniqlaydi. va likelarni kim bosganini ham bildiradi.
+  memberController.retrieveAuthMember, 
   productController.getAllProducts
-); //barcha restar mahsulotlarini bitta qilib qyozish.
+); 
 router.post(
   "/products",
   memberController.retrieveAuthMember, //

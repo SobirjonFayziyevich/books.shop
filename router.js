@@ -14,7 +14,9 @@ const uploader_member = require("./utils/upload-multer")("members"); //members a
  *         REST  API             *
  **********************************/
 
-// memberController
+/****************************
+ * memberController *
+ ***************************/
 router.post("/signup", memberController.signup);
 router.post("/login", memberController.login);
 router.get("/logout", memberController.logout);
@@ -38,7 +40,10 @@ router.post(
   memberController.updateMember
 );
 
-// PRODUCT RELATED ROUTERS
+/****************************
+ * PRODUCT RELATED ROUTERS *
+ ***************************/
+
 router.post(
   "/products",
   memberController.retrieveAuthMember, 
@@ -55,7 +60,11 @@ router.get(
   productController.getChosenProduct
 );
 
-// BOOKSHOP RELATED ROUTERS
+
+/****************************
+ * BOOKSHOP RELATED ROUTERS *
+ ***************************/
+
 router.get(
   "/books",
   memberController.retrieveAuthMember,
@@ -68,7 +77,10 @@ router.get(
   bookshopController.getChosenBookshop
 );
 
-          // ORDER RELATED ROUTERS: (faqat orderlarga dahldor);
+
+/****************************
+ * ORDER RELATED ROUTERS *
+ ***************************/
           
 router.post(
   "/orders/create",
@@ -88,9 +100,9 @@ router.post(
   orderController.editChosenOrder
 );
 
-             // COMMUNITY RELATED ROUTERS START:
-
-
+/****************************
+ *COMMUNITY RELATED ROUTERS *
+ ***************************/
 router.post(
   "/community/image",
    uploader_community.single("community_image"), //single mathod orqali imageni community_image nomi bn backendga yubordim.
@@ -121,7 +133,10 @@ router.get(
   communityController.getChosenArticle
 );
 
-//   FOLLOW REALETED ROUTERS
+
+/****************************
+ * FOLLOW REALETED ROUTERS *
+ ***************************/
 
 router.post(
   "/follow/subscribe",
@@ -135,7 +150,8 @@ router.post(
   followController.unsubscribe
 );
 
-router.get("/follow/followings", followController.getMemberFollowings);
+router.get("/follow/followings", 
+followController.getMemberFollowings);
 
 router.get(
   "/follow/followers",

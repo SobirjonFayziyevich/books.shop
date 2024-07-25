@@ -2,7 +2,7 @@ const assert = require("assert");
 const Definer = require("../lib/error");
 const Product = require("../models/Product");
 
-let productController = module.exports;
+const productController = module.exports;
 
 productController.getAllProducts = async (req, res) => {
   try {
@@ -19,13 +19,14 @@ productController.getAllProducts = async (req, res) => {
 productController.getChosenProduct = async (req, res) => {
   try {
     console.log("GET: cont/getChosenProduct");
-    const product = new Product(),
-      id = req.params.id,
-      result = await product.getChosenProductData(req.member, id);
+    const product = new Product();
+    const id = req.params.id;
+
+    const result = await product.getChosenProductData(req.member, id);
 
     res.json({ state: "success", data: result });
   } catch (err) {
-    console.log(`ERROR, cont/getChosenProduct, ${err.message} `);
+    console.log(`ERROR: cont/getChosenProduct, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
 };
@@ -37,8 +38,7 @@ productController.getChosenProduct = async (req, res) => {
 productController.addNewProduct = async (req, res) => {
   try {
     console.log("POST: cont/addNewProduct");
-    console.log(req.member);
-    // res.json({ test: "ok" });
+    // console.log(req.member);
 
     // TODO product creation develop.
 
@@ -46,16 +46,12 @@ productController.addNewProduct = async (req, res) => {
 
     const product = new Product();
     let data = req.body;
-    
+
     data.product_images = req.files.map((ele) => {
       return ele.path;
     });
-    
-    console.log(data);
-
     const result = await product.addNewProductData(data, req.member);
     assert.ok(result, Definer.product_err1);
-    res.send("ok");
 
     const html = `<script>
                     alert("new product ${data.product_name} added successfully");
@@ -75,7 +71,7 @@ productController.updateChosenProduct = async (req, res) => {
     const id = req.params.id;
     const result = await product.updateChosenProductData(
       id,
-      req.body, 
+      req.body,
       req.member._id
     );
     await res.json({ state: "success", data: result });

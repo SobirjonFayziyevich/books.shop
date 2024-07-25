@@ -11,7 +11,6 @@ const {
 const View = require("./View");
 const Like = require("./Like");
 
-
 class Member {
   constructor() {
     this.memberModel = MemberModel; // service model ichida schema model =dan foydalinyabdi
@@ -45,14 +44,12 @@ class Member {
       assert.ok(member, Definer.auth_err3);
       console.log(member);
       const isMatch = await bcrypt.compare(
-        input.mb_password,  // inputdan qaytayotgan mb_password
-        member.mb_password   // databasedan qaytayotgan mb_password.
+        input.mb_password, // inputdan qaytayotgan mb_password
+        member.mb_password // databasedan qaytayotgan mb_password.
       );
       assert.ok(isMatch, Definer.auth_err4);
 
-      return await this.memberModel
-      .findOne({ mb_nick: input.mb_nick })
-      .exec();
+      return await this.memberModel.findOne({ mb_nick: input.mb_nick }).exec();
     } catch (err) {
       throw err;
     }
@@ -68,7 +65,8 @@ class Member {
         { $unset: "mb_password" },
       ];
 
-      if (member) { // qachonkkiy login bulsa manashu yerdan qayta jarayon boshlanadi.
+      if (member) {
+        // qachonkkiy login bulsa manashu yerdan qayta jarayon boshlanadi.
         await this.viewChosenItemByMember(member, id, "member");
         aggregateQuery.push(lookup_auth_member_liked(auth_mb_id));
 
@@ -103,7 +101,8 @@ class Member {
       const doesExist = await view.checkViewExistence(view_ref_id); // view mavjudmi?
       console.log("doesExist:::", doesExist);
 
-      if (!doesExist) { //faqat bir marta view bulish teoremasi.
+      if (!doesExist) {
+        //faqat bir marta view bulish teoremasi.
         const result = await view.insertMemberView(view_ref_id, group_type);
         assert.ok(result, Definer.general_err1);
       }
@@ -115,13 +114,13 @@ class Member {
 
   async likeChosenItemByMember(member, like_ref_id, group_type) {
     try {
-      // console.log(" likeChosenItemByMember is working!!!!");
+      console.log(" likeChosenItemByMember is working!!!!");
       like_ref_id = shapeIntoMongooseObjectId(like_ref_id);
       const mb_id = shapeIntoMongooseObjectId(member._id);
 
       const like = new Like(mb_id);
       const isValid = await like.validateTargetItem(like_ref_id, group_type);
-
+      console.log("isValid::::::", isValid);
       assert.ok(isValid, Definer.general_err2);
       const doesExist = await like.checkLikeExistence(like_ref_id);
       console.log("doesExist::", doesExist);
@@ -131,7 +130,8 @@ class Member {
         : await like.insertMemberLike(like_ref_id, group_type); // agar mavjud bulmasa:
       assert.ok(data, Definer.general_err1);
 
-      const result = { // qaysi objectni qaytarmoqchimiz shuni yozaiz.
+      const result = {
+        // qaysi objectni qaytarmoqchimiz shuni yozaiz.
         like_group: data.like_group,
         like_ref_id: data.like_ref_id,
         like_status: doesExist ? 0 : 1,

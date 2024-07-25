@@ -55,6 +55,7 @@ class Bookshop {
 
   async getChosenBookshopData(member, id) {
     try {
+      const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
       id = shapeIntoMongooseObjectId(id);
 
       if (member) {

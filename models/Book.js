@@ -64,14 +64,15 @@ class Bookshop {
       }
 
       const result = await this.memberModel
-        .findOne({
-          _id: id,
-          mb_status: "ACTIVE",
-        })
-        .exec();
-      assert.ok(result, Definer.general_err2);
+      .aggregate([
+        { $match: { _id: id, mb_status: "ACTIVE" } },
+        lookup_auth_member_liked(auth_mb_id),
+      ])
+      .exec();
 
-      return result;
+      assert.ok(result, Definer.general_err1);
+
+      return result[0];
     } catch (err) {
       throw err;
     }

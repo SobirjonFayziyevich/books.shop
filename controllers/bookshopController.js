@@ -26,13 +26,14 @@ bookshopController.getChosenBookshop = async (req, res) => {
         const id = req.params.id;
         const book = new Book();
 
-        result = await book.getChosenBookshopData(req.member, id);
+       const result = await book.getChosenBookshopData(req.member, id);
+
         res.json({state: "success", data: result});
     } catch (err) {
         console.log(`ERROR, cont/getChosenBookshop, ${err.message}`);
         res.json({state: "fail", message: err.message});
     }
-}
+};
 
 /**********************************
  *    Bookshop related methods   *

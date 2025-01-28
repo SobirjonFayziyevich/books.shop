@@ -36,12 +36,12 @@ a {
 }
 
 .new_dish_txt {
-  font-family: "Source Serif Pro";
+  font-family: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif";
   font-style: normal;
   font-weight: 400;
-  font-size: 30px;
-  line-height: 25px;
+  font-size: 70px;
+  line-height: 55px;
   color: #ffffff;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   width: 100%;
 }

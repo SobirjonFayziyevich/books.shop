@@ -33,12 +33,13 @@ orderController.getMyOrders = async (req, res) => {
         console.log("GET: cont/getMyOrders"); 
         assert.ok(req.member, Definer.auth_err5); 
 
-        const order = new Order();  
+        const order = new Order();  //order objectini yasab oldim
         const result = await order.getMyOrdersData(req.member, req.query); 
         res.json({state: 'success', data: result }); 
     } catch (err) {
         console.log(`ERROR, cont/getMyOrders, ${err.message}`);
-        res.json({state: 'fail', message: err.message}); 
+        res.json({state: 'fail', message: err.message}); // json format orqali, createOrder requestiga login bulmagan user bulsa ham,
+        //json formatda kostimayzed qilgan errorni qabul qilib oladi.
     }
 };
 

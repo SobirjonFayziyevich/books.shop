@@ -122,7 +122,7 @@ class Order {
         ])
 
         .exec();
-      console.log("result:::", result);
+       console.log("result:::", result);
       return result;
     } catch (err) {
       throw err;
